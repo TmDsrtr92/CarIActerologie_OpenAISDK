@@ -71,22 +71,19 @@ def main():
     # Custom CSS for chat interface
     st.markdown("""
     <style>
-        .chat-container {
-            height: 60vh;
-            overflow-y: auto;
-            padding: 1rem;
-            border: 1px solid #e1e5e9;
-            border-radius: 10px;
-            background: white;
+        /* Ensure chat messages have proper spacing */
+        .element-container {
+            margin-bottom: 0.5rem;
         }
-        .stChatInput {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: white;
-            padding: 1rem;
-            border-top: 1px solid #e1e5e9;
+        
+        /* Style for better message layout */
+        div[data-testid="stContainer"] {
+            padding: 0;
+        }
+        
+        /* Ensure proper scrolling in chat container */
+        div[data-testid="stVerticalBlock"] {
+            gap: 0.5rem;
         }
     </style>
     """, unsafe_allow_html=True)
@@ -99,31 +96,29 @@ def main():
     </div>
     """, unsafe_allow_html=True)
     
-    # Chat area
-    chat_container = st.container()
+    # Main chat area - use columns to better handle sidebar layout
+    col1, col2 = st.columns([4, 0.1])  # Small right margin for better spacing
     
-    with chat_container:
-        st.markdown('<div class="chat-container">', unsafe_allow_html=True)
-        
-        # Display all messages
-        for message in st.session_state.messages:
-            is_user = message["role"] == "user"
-            display_message(message, is_user)
-        
-        # Show typing indicator if needed
-        if st.session_state.typing:
-            st.markdown("""
-            <div style="display: flex; justify-content: flex-start; margin: 1rem 0;">
-                <div style="background: #f1f3f4; color: #888; padding: 1rem; border-radius: 18px; font-style: italic;">
-                    AI is thinking...
+    with col1:
+        # Chat messages container
+        chat_container = st.container(height=500)
+        with chat_container:
+            # Display all messages
+            for message in st.session_state.messages:
+                is_user = message["role"] == "user"
+                display_message(message, is_user)
+            
+            # Show typing indicator if needed
+            if st.session_state.typing:
+                st.markdown("""
+                <div style="display: flex; justify-content: flex-start; margin: 1rem 0;">
+                    <div style="background: #f1f3f4; color: #888; padding: 1rem; border-radius: 18px; font-style: italic;">
+                        AI is thinking...
+                    </div>
                 </div>
-            </div>
-            """, unsafe_allow_html=True)
+                """, unsafe_allow_html=True)
         
-        st.markdown('</div>', unsafe_allow_html=True)
-    
-    # Chat input
-    with st.container():
+        # Chat input - positioned below the messages
         user_input = st.chat_input("Share your thoughts, feelings, or ask about your personality...")
         
         if user_input:
