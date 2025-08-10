@@ -8,7 +8,16 @@ import plotly.graph_objects as go
 import plotly.express as px
 import pandas as pd
 import numpy as np
+import sys
+import os
 from datetime import datetime, timedelta
+
+# Add the project root to Python path for data imports
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from data.mock_data import (
+    get_primary_character_type, get_mock_user_profile, 
+    get_character_evolution_data, CHARACTER_TYPES
+)
 
 st.set_page_config(
     page_title="Analysis - CarIActerology",
@@ -17,18 +26,23 @@ st.set_page_config(
 )
 
 def create_character_radar_chart():
-    """Create a radar chart for character traits"""
+    """Create a radar chart for character traits using real mock data"""
     
-    # Mock character traits data based on Le Senne's 8 character types
+    # Get current user's character type and profile
+    character_type = get_primary_character_type()
+    user_profile = get_mock_user_profile()
+    
+    # Convert Le Senne traits to 0-100 scale for visualization
+    base_traits = character_type["traits"]
     traits = {
-        'Emotionality': 75,
-        'Activity': 60,
-        'Resonance': 80,
-        'Extraversion': 65,
-        'Intuition': 70,
-        'Rationality': 55,
-        'Stability': 68,
-        'Openness': 82
+        'Emotionality': base_traits["emotionality"] * 10,
+        'Activity': base_traits["activity"] * 10, 
+        'Resonance': base_traits["resonance"] * 10,
+        'Extraversion': (base_traits["activity"] + base_traits["emotionality"]) * 5,
+        'Intuition': (10 - base_traits["resonance"]) * 10,
+        'Rationality': (10 - base_traits["emotionality"]) * 10,
+        'Stability': base_traits["resonance"] * 10,
+        'Openness': (base_traits["emotionality"] + (10 - base_traits["resonance"])) * 5
     }
     
     categories = list(traits.keys())
@@ -168,11 +182,24 @@ def create_traits_breakdown():
 def main():
     """Main analysis dashboard"""
     
+    # Get user data
+    character_type = get_primary_character_type()
+    user_profile = get_mock_user_profile()
+    
     # Header
     st.markdown("""
     <div style="background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); padding: 1rem; border-radius: 10px; margin-bottom: 2rem; color: white; text-align: center;">
         <h1>📊 Character Analysis Dashboard</h1>
         <p>Based on René Le Senne's Characterology Framework</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Character Type Summary
+    st.markdown(f"""
+    <div style="background: {character_type['color']}20; border-left: 4px solid {character_type['color']}; padding: 1rem; border-radius: 5px; margin-bottom: 2rem;">
+        <h2 style="color: {character_type['color']}; margin: 0;">🎭 Your Character Type: {character_type['name']}</h2>
+        <p style="margin: 0.5rem 0;"><strong>Confidence Score:</strong> {user_profile['confidence_score']*100:.1f}%</p>
+        <p style="margin: 0;">{character_type['description']}</p>
     </div>
     """, unsafe_allow_html=True)
     
@@ -185,18 +212,48 @@ def main():
         st.plotly_chart(fig, use_container_width=True)
     
     with col2:
-        # Current analysis summary
+        # Current analysis summary using real data
         st.markdown("### 📋 Analysis Summary")
         
-        st.metric("Sessions Analyzed", "12", "+3")
-        st.metric("Character Confidence", "85%", "+5%")
-        st.metric("Traits Identified", "8", "+2")
+        st.metric("Sessions Analyzed", f"{user_profile['analysis_sessions']}", "+3")
+        st.metric("Character Confidence", f"{user_profile['confidence_score']*100:.0f}%", "+5%")
+        st.metric("Total Interactions", f"{user_profile['total_interactions']}", "+12")
         
-        st.markdown("### 🎯 Key Insights")
-        st.info("🔍 Strong intuitive patterns detected")
-        st.info("⚡ High emotional responsiveness")
-        st.info("🤔 Secondary resonance tendencies")
-        st.info("🌟 Balanced extraversion levels")
+        st.markdown("### 💪 Key Strengths")
+        for strength in character_type["strengths"][:3]:
+            st.success(f"✓ {strength}")
+        
+        st.markdown("### ⚠️ Growth Areas") 
+        for challenge in character_type["challenges"][:2]:
+            st.warning(f"• {challenge}")
+    
+    # Character evolution timeline
+    st.markdown("---")
+    st.markdown("## 📈 Character Development Over Time")
+    
+    evolution_data = get_character_evolution_data(6)
+    
+    if evolution_data:
+        dates = [entry['date'].strftime('%Y-%m') for entry in evolution_data]
+        emotionality = [entry['traits']['emotionality'] * 10 for entry in evolution_data]
+        activity = [entry['traits']['activity'] * 10 for entry in evolution_data]
+        resonance = [entry['traits']['resonance'] * 10 for entry in evolution_data]
+        
+        evolution_fig = go.Figure()
+        evolution_fig.add_trace(go.Scatter(x=dates, y=emotionality, name='Emotionality', line=dict(color='#FF6B6B', width=3)))
+        evolution_fig.add_trace(go.Scatter(x=dates, y=activity, name='Activity', line=dict(color='#4ECDC4', width=3)))
+        evolution_fig.add_trace(go.Scatter(x=dates, y=resonance, name='Resonance', line=dict(color='#45B7D1', width=3)))
+        
+        evolution_fig.update_layout(
+            title="Character Trait Evolution - Le Senne Framework",
+            xaxis_title="Time Period", 
+            yaxis_title="Trait Strength (0-100)",
+            height=400,
+            showlegend=True,
+            hovermode='x unified'
+        )
+        
+        st.plotly_chart(evolution_fig, use_container_width=True)
     
     # Character type display
     create_character_type_display()

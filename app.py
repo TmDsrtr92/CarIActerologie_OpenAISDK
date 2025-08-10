@@ -44,6 +44,7 @@ def main():
             margin: 1rem 0;
             text-align: center;
             transition: all 0.3s ease;
+            cursor: pointer;
         }
         .navigation-card:hover {
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);

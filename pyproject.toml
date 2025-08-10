@@ -13,6 +13,7 @@ plotly = "^5.17.0"
 pandas = "^2.1.0"
 numpy = "^1.24.0"
 python-dateutil = "^2.8.2"
+reportlab = "^4.0.0"
 
 # Future AI integration dependencies (commented for Phase 1)
 # openai = "^1.10.0"

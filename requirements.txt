@@ -9,6 +9,9 @@ numpy>=1.24.0
 # Utility libraries
 python-dateutil>=2.8.2
 
+# Report generation
+reportlab>=4.0.0
+
 # For future AI integration (Phase 2+)
 # openai>=1.10.0
 # mem0ai>=0.1.0  

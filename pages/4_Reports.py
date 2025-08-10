@@ -7,6 +7,12 @@ import streamlit as st
 from datetime import datetime, timedelta
 import io
 import base64
+import sys
+import os
+
+# Add the project root to Python path for module imports
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from modules.report_generator import generate_report, get_available_report_types
 
 st.set_page_config(
     page_title="Reports - CarIActerology",
@@ -251,13 +257,13 @@ def create_download_button(report_content, filename):
     st.markdown(href, unsafe_allow_html=True)
 
 def main():
-    """Main reports interface"""
+    """Main reports interface with professional PDF generation"""
     
     # Header
     st.markdown("""
     <div style="background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); padding: 1rem; border-radius: 10px; margin-bottom: 2rem; color: white; text-align: center;">
-        <h1>📄 Analysis Reports</h1>
-        <p>Generate and download your psychological analysis reports</p>
+        <h1>📄 Professional Analysis Reports</h1>
+        <p>Generate comprehensive PDF reports using advanced psychological analysis</p>
     </div>
     """, unsafe_allow_html=True)
     
@@ -265,105 +271,140 @@ def main():
     col1, col2 = st.columns([2, 1])
     
     with col1:
-        st.markdown("### 📊 Generate New Report")
+        st.markdown("### 📊 Generate Professional Report")
         
-        # Report type selection
-        report_type = st.selectbox(
-            "Select Report Type",
-            [
-                "Complete Psychological Profile",
-                "Session Summary", 
-                "Character Evolution",
-                "Insights Collection",
-                "Therapeutic Recommendations"
-            ]
-        )
+        # Get available report types
+        available_reports = get_available_report_types()
         
-        # Date range selection
-        col_date1, col_date2 = st.columns(2)
-        with col_date1:
-            start_date = st.date_input("From Date", value=datetime.now() - timedelta(days=30))
-        with col_date2:
-            end_date = st.date_input("To Date", value=datetime.now())
+        # Report type selection with descriptions
+        st.markdown("**Select Report Type:**")
         
-        # Report options
-        st.markdown("**Report Options:**")
-        include_visualizations = st.checkbox("Include charts and visualizations", value=True)
-        include_recommendations = st.checkbox("Include therapeutic recommendations", value=True)
-        include_raw_data = st.checkbox("Include session data", value=False)
+        selected_report = None
+        for report_key, report_info in available_reports.items():
+            if st.button(
+                f"📋 {report_info['name']}", 
+                key=f"select_{report_key}",
+                use_container_width=True
+            ):
+                selected_report = report_key
         
-        # Preview section
-        create_report_preview(report_type)
-        
-        # Generate button
-        if st.button("🔄 Generate Report", use_container_width=True):
-            with st.spinner("Generating your psychological analysis report..."):
-                # Simulate report generation
-                import time
-                time.sleep(3)
-                
-                # Generate report content
-                report_content = generate_mock_report_content()
-                
-                st.success("✅ Report generated successfully!")
-                
-                # Display report
-                st.markdown("### 📋 Generated Report")
-                with st.expander("View Full Report", expanded=True):
-                    st.markdown(report_content)
-                
-                # Download button
-                filename = f"psychological_analysis_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
-                create_download_button(report_content, filename)
+        # Display report details if selected
+        if selected_report or 'selected_report_type' in st.session_state:
+            if selected_report:
+                st.session_state.selected_report_type = selected_report
+            
+            report_info = available_reports[st.session_state.selected_report_type]
+            
+            # Report details
+            st.markdown(f"### 📄 {report_info['name']}")
+            st.markdown(f"**Description:** {report_info['description']}")
+            st.markdown(f"**Length:** {report_info['pages']}")
+            
+            st.markdown("**Includes:**")
+            for item in report_info['includes']:
+                st.markdown(f"• {item}")
+            
+            st.markdown("---")
+            
+            # Generation options
+            st.markdown("**Report Options:**")
+            
+            col_opt1, col_opt2 = st.columns(2)
+            with col_opt1:
+                include_charts = st.checkbox("Include visualizations", value=True, key="include_charts")
+                confidential_header = st.checkbox("Confidential header", value=True, key="confidential")
+            
+            with col_opt2:
+                professional_format = st.checkbox("Professional formatting", value=True, key="professional")
+                detailed_analysis = st.checkbox("Detailed analysis", value=True, key="detailed")
+            
+            # Generate button
+            if st.button("🔄 Generate Professional PDF Report", use_container_width=True, key="generate_pdf"):
+                with st.spinner("Generating your professional psychological analysis report..."):
+                    try:
+                        # Generate the PDF report
+                        pdf_buffer = generate_report(st.session_state.selected_report_type)
+                        
+                        st.success("✅ Professional PDF report generated successfully!")
+                        
+                        # Create download button
+                        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+                        filename = f"{report_info['name'].replace(' ', '_')}_{timestamp}.pdf"
+                        
+                        st.download_button(
+                            label="📥 Download PDF Report",
+                            data=pdf_buffer,
+                            file_name=filename,
+                            mime="application/pdf",
+                            use_container_width=True
+                        )
+                        
+                        # Display preview message
+                        st.info("📋 Your professional PDF report is ready for download. The report includes comprehensive analysis, visualizations, and personalized recommendations based on René Le Senne's characterology framework.")
+                        
+                    except Exception as e:
+                        st.error(f"Error generating report: {str(e)}")
+                        st.info("Please try again or contact support if the issue persists.")
+        else:
+            st.info("👆 Please select a report type above to continue.")
     
     with col2:
-        # Report history
-        st.markdown("### 📚 Report History")
+        # Report types info
+        st.markdown("### 🎯 Report Types")
         
-        reports_history = [
-            {"name": "Complete Profile", "date": "2024-01-28", "type": "PDF", "size": "2.4 MB"},
-            {"name": "Weekly Summary", "date": "2024-01-21", "type": "PDF", "size": "856 KB"},
-            {"name": "Character Analysis", "date": "2024-01-14", "type": "PDF", "size": "1.2 MB"},
-            {"name": "Session Summary", "date": "2024-01-07", "type": "PDF", "size": "645 KB"}
-        ]
+        available_reports = get_available_report_types()
         
-        for report in reports_history:
-            with st.container():
-                st.markdown(f"""
-                <div style="background: #f8f9fc; border: 1px solid #e1e5e9; border-radius: 8px; padding: 1rem; margin: 0.5rem 0;">
-                    <strong>{report['name']}</strong><br>
-                    <small>📅 {report['date']} • {report['type']} • {report['size']}</small><br>
-                    <button style="background: #667eea; color: white; border: none; padding: 0.3rem 0.8rem; border-radius: 4px; font-size: 0.8rem; margin-top: 0.5rem;">Download</button>
-                </div>
-                """, unsafe_allow_html=True)
+        for report_key, report_info in available_reports.items():
+            with st.expander(f"📋 {report_info['name']}"):
+                st.markdown(f"**Pages:** {report_info['pages']}")
+                st.markdown(f"**Description:** {report_info['description']}")
+                st.markdown("**Content:**")
+                for item in report_info['includes']:
+                    st.markdown(f"• {item}")
         
         # Quick stats
         st.markdown("---")
-        st.markdown("### 📊 Report Statistics")
-        st.metric("Total Reports", "15", "+4 this month")
-        st.metric("Avg Report Size", "1.2 MB", "-0.3 MB")
-        st.metric("Most Popular", "Complete Profile", "65% of downloads")
+        st.markdown("### 📊 Report Features")
+        st.success("✅ Professional PDF formatting")
+        st.success("✅ René Le Senne framework")
+        st.success("✅ Comprehensive analysis")
+        st.success("✅ Personalized insights")
+        st.success("✅ Visual charts included")
+        st.success("✅ Therapeutic recommendations")
         
-        # Export options
+        # Export info
         st.markdown("---")
-        st.markdown("### 💾 Export Options")
+        st.markdown("### 💡 Report Benefits")
         
-        export_format = st.selectbox(
-            "Format",
-            ["PDF", "Markdown", "HTML", "Word Document"]
-        )
+        st.info("""
+        **Professional Quality**
+        • Hospital-grade formatting
+        • Suitable for healthcare sharing
+        • Evidence-based analysis
+        """)
         
-        if st.button("📤 Export All Reports", use_container_width=True):
-            st.success(f"All reports exported as {export_format} files!")
+        st.info("""
+        **Comprehensive Content**
+        • Character type analysis
+        • Progress tracking
+        • Actionable recommendations
+        """)
         
-        # Sharing options
-        st.markdown("### 🔗 Sharing")
+        st.info("""
+        **Privacy & Security**
+        • Confidential formatting
+        • Secure generation
+        • Personal use focused
+        """)
         
-        if st.button("👨‍⚕️ Share with Professional", use_container_width=True):
-            st.info("Secure sharing link generated for healthcare provider.")
+        # Additional features
+        st.markdown("### 🔧 Advanced Features")
         
-        if st.button("📧 Email Report", use_container_width=True):
-            st.info("Report sent to your registered email address.")
+        if st.button("📧 Email Report", use_container_width=True, key="email_report"):
+            st.info("Feature coming soon: Direct email delivery")
+        
+        if st.button("👨‍⚕️ Share with Provider", use_container_width=True, key="share_provider"):
+            st.info("Feature coming soon: Secure healthcare sharing")
     
     # Footer with information
     st.markdown("---")

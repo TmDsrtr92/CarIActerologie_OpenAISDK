@@ -74,7 +74,7 @@ def main():
             # Profile picture placeholder
             st.image("https://via.placeholder.com/150x150/667eea/white?text=SJ", width=150)
             
-            if st.button("Change Picture"):
+            if st.button("Change Picture", key="change_picture_btn"):
                 st.info("Picture upload feature coming soon!")
             
             st.markdown("**Account Information**")
@@ -86,11 +86,11 @@ def main():
             st.markdown("**Subscription Plan**")
             st.success("✅ **Premium Plan** - All features unlocked")
             
-            if st.button("Manage Subscription"):
+            if st.button("Manage Subscription", key="manage_subscription_btn"):
                 st.info("Redirecting to subscription management...")
         
         # Save profile changes
-        if st.button("💾 Save Profile Changes", use_container_width=True):
+        if st.button("💾 Save Profile Changes", use_container_width=True, key="save_profile_btn"):
             st.success("Profile updated successfully!")
     
     with tab2:
@@ -137,7 +137,7 @@ def main():
             st.markdown("**Security Settings**")
             
             # Password change
-            if st.button("🔐 Change Password"):
+            if st.button("🔐 Change Password", key="change_password_btn"):
                 st.info("Password change form would appear here")
             
             # Two-factor authentication
@@ -160,17 +160,17 @@ def main():
             st.info("🏥 HIPAA-compliant storage")
             st.info("🌍 GDPR compliant")
             
-            if st.button("📋 Download Privacy Report"):
+            if st.button("📋 Download Privacy Report", key="download_privacy_btn"):
                 st.success("Privacy report generated and downloaded!")
         
         # Privacy actions
         col3, col4 = st.columns(2)
         with col3:
-            if st.button("🗑️ Delete Specific Data", use_container_width=True):
+            if st.button("🗑️ Delete Specific Data", use_container_width=True, key="delete_specific_btn"):
                 st.warning("Data deletion interface would appear here")
         
         with col4:
-            if st.button("📤 Export All Data", use_container_width=True):
+            if st.button("📤 Export All Data", use_container_width=True, key="export_data_privacy_btn"):
                 st.success("Data export initiated!")
     
     with tab3:
@@ -250,7 +250,7 @@ def main():
                 </div>
                 """, unsafe_allow_html=True)
         
-        if st.button("🎨 Apply Interface Changes", use_container_width=True):
+        if st.button("🎨 Apply Interface Changes", use_container_width=True, key="apply_interface_btn"):
             st.success("Interface preferences updated!")
     
     with tab4:
@@ -317,7 +317,7 @@ def main():
                 with col_quiet2:
                     quiet_end = st.time_input("To", value=datetime.strptime("08:00", "%H:%M").time())
         
-        if st.button("🔔 Save Notification Settings", use_container_width=True):
+        if st.button("🔔 Save Notification Settings", use_container_width=True, key="save_notifications_btn"):
             st.success("Notification preferences updated!")
     
     with tab5:
@@ -360,14 +360,14 @@ def main():
             st.markdown("**Data Actions**")
             
             # Export options
-            if st.button("📤 Export All Data", use_container_width=True):
+            if st.button("📤 Export All Data", use_container_width=True, key="export_data_backup_btn"):
                 with st.spinner("Preparing data export..."):
                     import time
                     time.sleep(2)
                     st.success("✅ Data export ready for download!")
             
             # Backup actions
-            if st.button("💾 Create Manual Backup", use_container_width=True):
+            if st.button("💾 Create Manual Backup", use_container_width=True, key="manual_backup_btn"):
                 with st.spinner("Creating backup..."):
                     import time
                     time.sleep(2)
@@ -375,10 +375,10 @@ def main():
             
             # Data cleanup
             st.markdown("**Data Cleanup**")
-            if st.button("🧹 Clean Temporary Files", use_container_width=True):
+            if st.button("🧹 Clean Temporary Files", use_container_width=True, key="clean_temp_btn"):
                 st.success("✅ Temporary files cleaned (150 MB freed)")
             
-            if st.button("🗑️ Delete Old Sessions", use_container_width=True):
+            if st.button("🗑️ Delete Old Sessions", use_container_width=True, key="delete_old_sessions_btn"):
                 st.warning("⚠️ This will delete sessions older than your retention period")
             
             # Dangerous actions
@@ -389,12 +389,12 @@ def main():
                 confirm_text = st.text_input("Type 'DELETE ALL DATA' to confirm:")
                 
                 if confirm_text == "DELETE ALL DATA":
-                    if st.button("🗑️ Permanently Delete All Data"):
+                    if st.button("🗑️ Permanently Delete All Data", key="delete_all_data_btn"):
                         st.error("Data deletion would be executed here")
             
             with st.expander("🔄 Reset Character Analysis"):
                 st.warning("This will reset your character analysis and start fresh")
-                if st.button("🔄 Reset Analysis"):
+                if st.button("🔄 Reset Analysis", key="reset_analysis_btn"):
                     st.info("Character analysis reset - new sessions will rebuild your profile")
     
     # Footer
