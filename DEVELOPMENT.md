@@ -102,17 +102,25 @@ CarIActerology_OpenAISDK/
 
 ### Common Issues
 
-1. **Import errors on Dashboard/Reports/Settings pages**
-   - Make sure all dependencies are installed: `pip install -r requirements.txt`
-   - Check that virtual environment is activated
+1. **Import errors on Dashboard/Reports/Settings pages (especially Plotly)**
+   - **Problem**: Missing dependencies, especially `plotly` which is required for visualizations
+   - **Solution**: Install all dependencies: `pip install -r requirements.txt`
+   - **Quick fix**: `pip install plotly pandas numpy streamlit`
+   - **Verify**: Run `python -c "import streamlit, plotly, pandas, numpy; print('OK')"`
 
-2. **Streamlit not found**
+2. **Pages work in Streamlit Cloud but not locally**
+   - **Cause**: Streamlit Cloud installs all dependencies automatically, local environment may be missing packages
+   - **Solution**: Ensure virtual environment has all packages: `pip install -r requirements.txt`
+   - **Check**: Run the verification command in setup.bat
+
+3. **Streamlit not found**
    - Activate virtual environment: `venv\Scripts\activate`
    - Reinstall: `pip install streamlit`
 
-3. **Module import errors**
+4. **Module import errors**
    - Ensure you're running from the project root directory
    - Check that all required packages are in requirements.txt
+   - Make sure virtual environment is activated
 
 ### Development Tips
 

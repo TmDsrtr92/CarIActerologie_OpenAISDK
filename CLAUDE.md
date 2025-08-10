@@ -2,6 +2,8 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+First rule : never use emojis in your code or scripts
+
 ## Project Overview
 
 CarIActerology is an AI-powered psychological self-discovery platform based on René Le Senne's characterology. The project uses modern AI techniques to help users understand themselves through conversations and analysis, following the Socratic principle "Know thyself."
