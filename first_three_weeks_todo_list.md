@@ -7,10 +7,10 @@
 **Priority: Foundation Setup**
 
 - [ ] **Repository & Environment Setup**
-  - [ ] Create GitHub repository for CarIActerology
-  - [ ] Initialize local project structure with Poetry
+  - [X] Create GitHub repository for CarIActerology
+  - [ ] Initialize local project strcucture with Poetry
   - [ ] Set up virtual environment with Python 3.11+
-  - [ ] Create basic folder structure:
+  - [X] Create basic folder structure:
     ```
     cariacterology/
     ├── app.py
@@ -22,10 +22,10 @@
     ```
 
 - [ ] **Basic Streamlit App**
-  - [ ] Create minimal app.py with multi-page setup
-  - [ ] Configure Streamlit config.toml for theming
-  - [ ] Set up basic navigation between pages
-  - [ ] Test local Streamlit app runs successfully
+  - [X] Create minimal app.py with multi-page setup
+  - [X] Configure Streamlit config.toml for theming
+  - [X] Set up basic navigation between pages
+  - [X] Test local Streamlit app runs successfully
 
 - [ ] **Initial Deployment**
   - [ ] Connect GitHub repo to Streamlit Cloud

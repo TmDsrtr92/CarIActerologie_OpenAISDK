@@ -78,23 +78,31 @@ CarIActerology is designed to help users better understand themselves through me
 
 ### Installation
 
-1. Clone the repository:
+#### Option 1: Using Poetry (Recommended)
 ```bash
 git clone <repository-url>
 cd CarIActerology_OpenAISDK
+poetry install
+poetry run streamlit run app.py
 ```
 
-2. Install dependencies:
+#### Option 2: Using pip
 ```bash
+git clone <repository-url>
+cd CarIActerology_OpenAISDK
 pip install -r requirements.txt
-```
-
-3. Run the application:
-```bash
 streamlit run app.py
 ```
 
-4. Open your browser to `http://localhost:8501`
+#### Option 3: Automated Setup (Windows)
+```bash
+git clone <repository-url>
+cd CarIActerology_OpenAISDK
+setup.bat
+run.bat
+```
+
+Open your browser to `http://localhost:8501`
 
 ## Project Structure
 
