@@ -6,7 +6,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 CarIActerology is an AI-powered psychological self-discovery platform based on René Le Senne's characterology. The project uses modern AI techniques to help users understand themselves through conversations and analysis, following the Socratic principle "Know thyself."
 
-In the root directory, there are reference I can use to better understand the context of project when coding.
+In the root directory, there are reference I can use to better understand the context of project when coding. 
+
+the mem0_doc and the openai_agents_sdk_examples_and_doc folders are for reference only of techno we are using. Don't modify them. 
+
+The import documents for having an overall view of the project are design_doc.md and implementation_plan.md
 
 ### **Project Golden Rules**
 
