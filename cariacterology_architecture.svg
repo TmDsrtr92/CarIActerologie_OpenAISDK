@@ -1,0 +1,191 @@
+<svg width="1200" height="900" viewBox="0 0 1200 900" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1200" height="900" fill="#f8fafc"/>
+  
+  <!-- Title -->
+  <text x="600" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#1e293b">CarIActerology - System Architecture</text>
+  
+  <!-- User Layer -->
+  <rect x="50" y="60" width="1100" height="80" fill="#e0f2fe" stroke="#0284c7" stroke-width="2" rx="8"/>
+  <text x="600" y="85" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#0284c7">USER INTERFACE LAYER</text>
+  <text x="100" y="110" font-family="Arial, sans-serif" font-size="12" fill="#0f172a">Chat Interface</text>
+  <text x="250" y="110" font-family="Arial, sans-serif" font-size="12" fill="#0f172a">Analysis Dashboard</text>
+  <text x="400" y="110" font-family="Arial, sans-serif" font-size="12" fill="#0f172a">User Dashboard</text>
+  <text x="550" y="110" font-family="Arial, sans-serif" font-size="12" fill="#0f172a">Reports Center</text>
+  <text x="700" y="110" font-family="Arial, sans-serif" font-size="12" fill="#0f172a">Settings</text>
+  <text x="850" y="110" font-family="Arial, sans-serif" font-size="12" fill="#0f172a">Plotly Visualizations</text>
+  <text x="1000" y="110" font-family="Arial, sans-serif" font-size="12" fill="#0f172a">ReportLab PDFs</text>
+  
+  <!-- Streamlit Cloud Container -->
+  <rect x="50" y="160" width="1100" height="400" fill="#fef3c7" stroke="#f59e0b" stroke-width="3" rx="12"/>
+  <text x="600" y="185" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#f59e0b">STREAMLIT CLOUD DEPLOYMENT</text>
+  
+  <!-- Authentication Layer -->
+  <rect x="80" y="200" width="200" height="60" fill="#f3e8ff" stroke="#8b5cf6" stroke-width="1" rx="6"/>
+  <text x="180" y="220" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#8b5cf6">Authentication</text>
+  <text x="180" y="240" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#6b21a8">Streamlit-Authenticator</text>
+  <text x="180" y="250" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#6b21a8">/ Auth0</text>
+  
+  <!-- OpenAI Agents SDK Container -->
+  <rect x="300" y="200" width="500" height="340" fill="#dcfce7" stroke="#16a34a" stroke-width="2" rx="8"/>
+  <text x="550" y="225" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#16a34a">OpenAI Agents SDK - Single Process Architecture</text>
+  
+  <!-- Individual Agents -->
+  <rect x="320" y="240" width="140" height="45" fill="#fef9c3" stroke="#eab308" stroke-width="1" rx="4"/>
+  <text x="390" y="258" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#a16207">Characterology</text>
+  <text x="390" y="270" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#a16207">RAG Agent</text>
+  
+  <rect x="480" y="240" width="140" height="45" fill="#fef9c3" stroke="#eab308" stroke-width="1" rx="4"/>
+  <text x="550" y="258" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#a16207">Emotional Analysis</text>
+  <text x="550" y="270" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#a16207">Agent</text>
+  
+  <rect x="640" y="240" width="140" height="45" fill="#fef9c3" stroke="#eab308" stroke-width="1" rx="4"/>
+  <text x="710" y="258" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#a16207">Anxiety/Shyness</text>
+  <text x="710" y="270" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#a16207">Specialist Agent</text>
+  
+  <rect x="320" y="300" width="140" height="45" fill="#fef9c3" stroke="#eab308" stroke-width="1" rx="4"/>
+  <text x="390" y="318" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#a16207">Report Generator</text>
+  <text x="390" y="330" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#a16207">Agent</text>
+  
+  <rect x="480" y="300" width="140" height="45" fill="#fef9c3" stroke="#eab308" stroke-width="1" rx="4"/>
+  <text x="550" y="318" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#a16207">Conversational</text>
+  <text x="550" y="330" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#a16207">Agent</text>
+  
+  <rect x="640" y="300" width="140" height="45" fill="#fef9c3" stroke="#eab308" stroke-width="1" rx="4"/>
+  <text x="710" y="318" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#a16207">Recommendations</text>
+  <text x="710" y="330" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#a16207">Agent</text>
+  
+  <!-- Integration Agent (Orchestrator) -->
+  <rect x="400" y="360" width="200" height="45" fill="#fed7d7" stroke="#dc2626" stroke-width="2" rx="4"/>
+  <text x="500" y="378" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#dc2626">Integration Agent</text>
+  <text x="500" y="390" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#dc2626">(Orchestrator)</text>
+  
+  <!-- Smart Routing -->
+  <rect x="400" y="420" width="200" height="45" fill="#e0e7ff" stroke="#3b82f6" stroke-width="1" rx="4"/>
+  <text x="500" y="438" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#3b82f6">Smart Model Routing</text>
+  <text x="500" y="450" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#3b82f6">GPT-4o ↔ GPT-4o-mini</text>
+  
+  <!-- Mem0 Memory System -->
+  <rect x="820" y="200" width="310" height="340" fill="#fce7f3" stroke="#ec4899" stroke-width="2" rx="8"/>
+  <text x="975" y="225" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#ec4899">Mem0 Memory System</text>
+  
+  <!-- Memory Types -->
+  <rect x="840" y="240" width="130" height="35" fill="#fef2f2" stroke="#ef4444" stroke-width="1" rx="3"/>
+  <text x="905" y="258" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" font-weight="bold" fill="#ef4444">Short-term Memory</text>
+  <text x="905" y="268" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="#ef4444">Active Context</text>
+  
+  <rect x="980" y="240" width="130" height="35" fill="#fef2f2" stroke="#ef4444" stroke-width="1" rx="3"/>
+  <text x="1045" y="258" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" font-weight="bold" fill="#ef4444">Long-term Memory</text>
+  <text x="1045" y="268" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="#ef4444">User Insights</text>
+  
+  <rect x="840" y="285" width="130" height="35" fill="#fef2f2" stroke="#ef4444" stroke-width="1" rx="3"/>
+  <text x="905" y="303" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" font-weight="bold" fill="#ef4444">Episodic Memory</text>
+  <text x="905" y="313" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="#ef4444">Key Moments</text>
+  
+  <rect x="980" y="285" width="130" height="35" fill="#fef2f2" stroke="#ef4444" stroke-width="1" rx="3"/>
+  <text x="1045" y="303" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" font-weight="bold" fill="#ef4444">Semantic Memory</text>
+  <text x="1045" y="313" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="#ef4444">User Patterns</text>
+  
+  <rect x="910" y="330" width="130" height="35" fill="#fef2f2" stroke="#ef4444" stroke-width="1" rx="3"/>
+  <text x="975" y="348" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" font-weight="bold" fill="#ef4444">Working Memory</text>
+  <text x="975" y="358" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="#ef4444">Session State</text>
+  
+  <!-- FAISS Vector Storage -->
+  <rect x="840" y="380" width="270" height="50" fill="#f0f9ff" stroke="#0ea5e9" stroke-width="1" rx="4"/>
+  <text x="975" y="398" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#0ea5e9">FAISS Vector Database</text>
+  <text x="975" y="410" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#0ea5e9">Embeddings: OpenAI text-embedding-3-small</text>
+  <text x="975" y="420" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#0ea5e9">Knowledge Base + Memory Vectors</text>
+  
+  <!-- External Services Layer -->
+  <rect x="50" y="580" width="1100" height="120" fill="#f1f5f9" stroke="#64748b" stroke-width="2" rx="8"/>
+  <text x="600" y="605" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#64748b">EXTERNAL SERVICES LAYER</text>
+  
+  <!-- OpenAI APIs -->
+  <rect x="80" y="620" width="150" height="60" fill="#dbeafe" stroke="#3b82f6" stroke-width="1" rx="4"/>
+  <text x="155" y="640" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#3b82f6">OpenAI APIs</text>
+  <text x="155" y="652" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#3b82f6">GPT-4o / GPT-4o-mini</text>
+  <text x="155" y="662" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#3b82f6">text-embedding-3-small</text>
+  <text x="155" y="672" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#3b82f6">Agents SDK</text>
+  
+  <!-- Supabase -->
+  <rect x="250" y="620" width="150" height="60" fill="#dcfce7" stroke="#16a34a" stroke-width="1" rx="4"/>
+  <text x="325" y="640" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#16a34a">Supabase</text>
+  <text x="325" y="652" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#16a34a">PostgreSQL Database</text>
+  <text x="325" y="662" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#16a34a">User Data & Metadata</text>
+  <text x="325" y="672" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#16a34a">Memory Persistence</text>
+  
+  <!-- Cloudflare R2 -->
+  <rect x="420" y="620" width="150" height="60" fill="#fef3c7" stroke="#f59e0b" stroke-width="1" rx="4"/>
+  <text x="495" y="640" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#f59e0b">Cloudflare R2</text>
+  <text x="495" y="652" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#f59e0b">Object Storage</text>
+  <text x="495" y="662" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#f59e0b">PDF Reports</text>
+  <text x="495" y="672" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#f59e0b">FAISS Backups</text>
+  
+  <!-- Auth0 -->
+  <rect x="590" y="620" width="150" height="60" fill="#f3e8ff" stroke="#8b5cf6" stroke-width="1" rx="4"/>
+  <text x="665" y="640" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#8b5cf6">Auth0</text>
+  <text x="665" y="652" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#8b5cf6">Authentication</text>
+  <text x="665" y="662" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#8b5cf6">User Management</text>
+  <text x="665" y="672" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#8b5cf6">Session Security</text>
+  
+  <!-- Sentry -->
+  <rect x="760" y="620" width="150" height="60" fill="#fecaca" stroke="#ef4444" stroke-width="1" rx="4"/>
+  <text x="835" y="640" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#ef4444">Sentry</text>
+  <text x="835" y="652" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#ef4444">Error Tracking</text>
+  <text x="835" y="662" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#ef4444">Performance Monitoring</text>
+  <text x="835" y="672" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#ef4444">Alerting</text>
+  
+  <!-- GitHub Actions -->
+  <rect x="930" y="620" width="150" height="60" fill="#f8fafc" stroke="#1f2937" stroke-width="1" rx="4"/>
+  <text x="1005" y="640" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#1f2937">GitHub Actions</text>
+  <text x="1005" y="652" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#1f2937">CI/CD Pipeline</text>
+  <text x="1005" y="662" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#1f2937">Automated Testing</text>
+  <text x="1005" y="672" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#1f2937">Deployment</text>
+  
+  <!-- Data Flow Layer -->
+  <rect x="50" y="720" width="1100" height="80" fill="#fef2f2" stroke="#ef4444" stroke-width="2" rx="8"/>
+  <text x="600" y="745" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#ef4444">DATA FLOW & PERSISTENCE</text>
+  <text x="150" y="770" font-family="Arial, sans-serif" font-size="11" fill="#dc2626">User Interactions</text>
+  <text x="300" y="770" font-family="Arial, sans-serif" font-size="11" fill="#dc2626">Agent Processing</text>
+  <text x="450" y="770" font-family="Arial, sans-serif" font-size="11" fill="#dc2626">Memory Extraction</text>
+  <text x="600" y="770" font-family="Arial, sans-serif" font-size="11" fill="#dc2626">Vector Embedding</text>
+  <text x="750" y="770" font-family="Arial, sans-serif" font-size="11" fill="#dc2626">Knowledge Retrieval</text>
+  <text x="900" y="770" font-family="Arial, sans-serif" font-size="11" fill="#dc2626">Response Generation</text>
+  <text x="1050" y="770" font-family="Arial, sans-serif" font-size="11" fill="#dc2626">UI Update</text>
+  
+  <!-- Quality & Monitoring -->
+  <rect x="50" y="820" width="1100" height="60" fill="#ecfdf5" stroke="#10b981" stroke-width="2" rx="8"/>
+  <text x="600" y="845" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#10b981">QUALITY ASSURANCE & MONITORING</text>
+  <text x="150" y="865" font-family="Arial, sans-serif" font-size="11" fill="#059669">85% Test Coverage</text>
+  <text x="300" y="865" font-family="Arial, sans-serif" font-size="11" fill="#059669">Cost Optimization</text>
+  <text x="450" y="865" font-family="Arial, sans-serif" font-size="11" fill="#059669">Performance Metrics</text>
+  <text x="600" y="865" font-family="Arial, sans-serif" font-size="11" fill="#059669">Error Tracking</text>
+  <text x="750" y="865" font-family="Arial, sans-serif" font-size="11" fill="#059669">Memory Validation</text>
+  <text x="900" y="865" font-family="Arial, sans-serif" font-size="11" fill="#059669">Response Quality</text>
+  <text x="1050" y="865" font-family="Arial, sans-serif" font-size="11" fill="#059669">User Analytics</text>
+  
+  <!-- Arrows for data flow -->
+  <!-- User to Streamlit -->
+  <path d="M 600 140 L 600 160" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- Streamlit to Agents -->
+  <path d="M 300 260 L 320 260" stroke="#16a34a" stroke-width="1" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 300 320 L 320 320" stroke="#16a34a" stroke-width="1" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- Agents to Memory -->
+  <path d="M 800 300 L 820 300" stroke="#ec4899" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- Streamlit to External Services -->
+  <path d="M 150 560 L 150 620" stroke="#64748b" stroke-width="1" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 325 560 L 325 620" stroke="#64748b" stroke-width="1" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 495 560 L 495 620" stroke="#64748b" stroke-width="1" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 665 560 L 665 620" stroke="#64748b" stroke-width="1" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 835 560 L 835 620" stroke="#64748b" stroke-width="1" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- Arrow marker definition -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#64748b"/>
+    </marker>
+  </defs>
+</svg>

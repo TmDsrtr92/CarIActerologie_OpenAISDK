@@ -1,0 +1,16 @@
+# Core framework
+streamlit>=1.30.0
+
+# Data visualization
+plotly>=5.17.0
+pandas>=2.1.0
+numpy>=1.24.0
+
+# For future AI integration (not used in mock version)
+# openai>=1.10.0
+# mem0ai>=0.1.0  
+# faiss-cpu>=1.7.4
+# supabase>=2.3.0
+
+# Utility libraries
+python-dateutil>=2.8.2
