@@ -71,28 +71,53 @@ def main():
     # Custom CSS for chat interface
     st.markdown("""
     <style>
-        /* Ensure chat messages have proper spacing */
-        .element-container {
-            margin-bottom: 0.5rem;
+        /* Fix viewport to prevent any scrolling */
+        .main .block-container {
+            height: 100vh;
+            max-height: 100vh;
+            overflow: hidden;
+            padding: 0.5rem;
+            display: flex;
+            flex-direction: column;
         }
         
-        /* Style for better message layout */
+        /* Ensure sidebar doesn't cause overflow */
+        .css-1d391kg {
+            padding-bottom: 1rem;
+        }
+        
+        /* Reduce all gaps to minimum */
+        div[data-testid="stVerticalBlock"] {
+            gap: 0.25rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Minimize all margins */
+        .element-container {
+            margin: 0;
+        }
+        
+        /* Remove extra padding */
         div[data-testid="stContainer"] {
             padding: 0;
+            margin: 0;
         }
         
-        /* Ensure proper scrolling in chat container */
-        div[data-testid="stVerticalBlock"] {
-            gap: 0.5rem;
+        /* Fix chat input positioning */
+        div[data-testid="stChatInput"] {
+            margin-top: 0.5rem;
+            margin-bottom: 0;
         }
     </style>
     """, unsafe_allow_html=True)
     
-    # Header
+    # Header - ultra compact design
     st.markdown("""
-    <div style="background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); padding: 1rem; border-radius: 10px; margin-bottom: 1rem; color: white; text-align: center;">
-        <h2>💬 Psychological Chat Session</h2>
-        <p>Explore your character through conversation</p>
+    <div style="background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); padding: 0.6rem; border-radius: 8px; margin-bottom: 0.3rem; color: white; text-align: center;">
+        <h2 style="margin: 0; padding: 0; font-size: 1.3rem;">💬 Psychological Chat Session</h2>
+        <p style="margin: 0.2rem 0 0 0; font-size: 0.85rem;">Explore your character through conversation</p>
     </div>
     """, unsafe_allow_html=True)
     
@@ -100,8 +125,9 @@ def main():
     col1, col2 = st.columns([4, 0.1])  # Small right margin for better spacing
     
     with col1:
-        # Chat messages container
-        chat_container = st.container(height=500)
+        # Chat messages container - calculated to fit viewport exactly
+        # Viewport (100vh) - Header (65px) - Input (90px) - Padding (30px) = ~515px
+        chat_container = st.container(height=515)
         with chat_container:
             # Display all messages
             for message in st.session_state.messages:
@@ -118,7 +144,7 @@ def main():
                 </div>
                 """, unsafe_allow_html=True)
         
-        # Chat input - positioned below the messages
+        # Chat input - positioned directly below the messages
         user_input = st.chat_input("Share your thoughts, feelings, or ask about your personality...")
         
         if user_input:
