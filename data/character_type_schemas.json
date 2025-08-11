@@ -1,0 +1,428 @@
+{
+  "metadata": {
+    "version": "1.0.0", 
+    "created": "2025-01-11",
+    "description": "Detailed schemas for the 8 Le Senne character types with comprehensive properties",
+    "schema_type": "character_type_definition",
+    "validation_rules": "JSON Schema v7 compliant"
+  },
+  "schema_definitions": {
+    "character_type": {
+      "type": "object",
+      "required": [
+        "formula",
+        "name", 
+        "core_traits",
+        "description",
+        "key_characteristics",
+        "strengths",
+        "challenges",
+        "behavioral_patterns"
+      ],
+      "properties": {
+        "formula": {
+          "type": "string",
+          "pattern": "^(E|nE)(A|nA)(P|S)$",
+          "description": "Three-letter formula representing Emotionality, Activity, Resonance"
+        },
+        "name": {
+          "type": "string",
+          "description": "French name of character type"
+        },
+        "english_name": {
+          "type": "string",
+          "description": "English translation of character type name"
+        },
+        "historical_examples": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Historical figures exemplifying this character type"
+        },
+        "core_traits": {
+          "type": "object",
+          "required": ["emotionality", "activity", "resonance_primary", "resonance_secondary"],
+          "properties": {
+            "emotionality": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 10,
+              "description": "Emotional reactivity level (0=non-emotional, 10=highly emotional)"
+            },
+            "activity": {
+              "type": "number", 
+              "minimum": 0,
+              "maximum": 10,
+              "description": "Activity level (0=non-active, 10=highly active)"
+            },
+            "resonance_primary": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 10, 
+              "description": "Primary resonance level (immediate reaction)"
+            },
+            "resonance_secondary": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 10,
+              "description": "Secondary resonance level (delayed, persistent reaction)"
+            }
+          }
+        },
+        "description": {
+          "type": "string",
+          "description": "Comprehensive description of character type"
+        },
+        "key_characteristics": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 3,
+          "description": "List of key defining characteristics"
+        },
+        "strengths": {
+          "type": "array", 
+          "items": {
+            "type": "string"
+          },
+          "minItems": 3,
+          "description": "Natural strengths of this character type"
+        },
+        "challenges": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 3,
+          "description": "Common challenges faced by this character type"
+        },
+        "behavioral_patterns": {
+          "type": "object",
+          "required": ["work_style", "relationships", "decision_making", "stress_response"],
+          "properties": {
+            "work_style": {
+              "type": "string",
+              "description": "Typical approach to work and tasks"
+            },
+            "relationships": {
+              "type": "string", 
+              "description": "Characteristic relationship patterns"
+            },
+            "decision_making": {
+              "type": "string",
+              "description": "Decision-making approach and style"
+            },
+            "stress_response": {
+              "type": "string",
+              "description": "Typical response to stress and pressure"
+            }
+          }
+        },
+        "subtypes": {
+          "type": "object",
+          "description": "Refined subtypes within the main character type",
+          "patternProperties": {
+            "^[a-z_]+$": {
+              "type": "object",
+              "properties": {
+                "characteristics": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "examples": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "description": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "diagnostic_indicators": {
+          "type": "object",
+          "description": "Observable indicators for identifying this character type",
+          "properties": {
+            "verbal_patterns": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Characteristic speech and language patterns"
+            },
+            "nonverbal_cues": {
+              "type": "array", 
+              "items": {
+                "type": "string"
+              },
+              "description": "Body language and nonverbal indicators"
+            },
+            "behavioral_markers": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Observable behavioral patterns"
+            },
+            "emotional_responses": {
+              "type": "array",
+              "items": {
+                "type": "string" 
+              },
+              "description": "Typical emotional response patterns"
+            }
+          }
+        },
+        "developmental_aspects": {
+          "type": "object",
+          "description": "How this character type develops over time",
+          "properties": {
+            "childhood_manifestations": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "How type manifests in childhood"
+            },
+            "adolescent_challenges": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Specific challenges during adolescence"
+            },
+            "adult_development": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Development patterns in adulthood"
+            },
+            "maturation_potential": {
+              "type": "string",
+              "description": "Potential for growth and character development"
+            }
+          }
+        },
+        "interaction_patterns": {
+          "type": "object",
+          "description": "How this type interacts with other character types",
+          "patternProperties": {
+            "^with_[a-z_]+$": {
+              "type": "object",
+              "properties": {
+                "compatibility": {
+                  "type": "string",
+                  "enum": ["high", "moderate", "low", "complex"]
+                },
+                "interaction_dynamics": {
+                  "type": "string",
+                  "description": "Description of typical interaction patterns"
+                },
+                "potential_conflicts": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "synergies": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "vocational_tendencies": {
+          "type": "object",
+          "description": "Career and vocational inclinations",
+          "properties": {
+            "preferred_fields": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Career fields that align with character type"
+            },
+            "work_environments": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Preferred work environment characteristics"
+            },
+            "leadership_style": {
+              "type": "string",
+              "description": "Natural leadership approach if applicable"
+            },
+            "team_role": {
+              "type": "string", 
+              "description": "Typical role played in team settings"
+            }
+          }
+        },
+        "therapeutic_considerations": {
+          "type": "object",
+          "description": "Considerations for therapeutic work with this type",
+          "properties": {
+            "therapeutic_alliance": {
+              "type": "string",
+              "description": "How this type forms therapeutic relationships"
+            },
+            "preferred_interventions": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Therapeutic approaches that work well"
+            },
+            "resistance_patterns": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Common forms of therapeutic resistance"
+            },
+            "growth_opportunities": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Areas with potential for therapeutic growth"
+            }
+          }
+        },
+        "assessment_questions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "question": {
+                "type": "string",
+                "description": "Assessment question text"
+              },
+              "dimension": {
+                "type": "string",
+                "enum": ["emotionality", "activity", "resonance"],
+                "description": "Which character dimension this question assesses"
+              },
+              "type_indicator": {
+                "type": "string",
+                "description": "What response indicates this character type"
+              },
+              "scoring_weight": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1,
+                "description": "Weight of this question in overall assessment"
+              }
+            },
+            "required": ["question", "dimension", "type_indicator"]
+          },
+          "description": "Specific assessment questions for identifying this type"
+        }
+      }
+    }
+  },
+  "validation_rules": {
+    "trait_consistency": {
+      "description": "Core traits must be consistent with character formula",
+      "rules": [
+        "If formula contains 'E', emotionality must be >= 6",
+        "If formula contains 'nE', emotionality must be <= 4",
+        "If formula contains 'A', activity must be >= 6", 
+        "If formula contains 'nA', activity must be <= 4",
+        "If formula contains 'P', resonance_primary must be >= 6",
+        "If formula contains 'S', resonance_secondary must be >= 6"
+      ]
+    },
+    "content_requirements": {
+      "description": "Minimum content requirements for each character type",
+      "requirements": [
+        "At least 3 historical examples",
+        "At least 5 key characteristics",
+        "At least 3 strengths and 3 challenges",
+        "All 4 behavioral patterns must be defined",
+        "At least 2 subtypes should be specified"
+      ]
+    },
+    "linguistic_consistency": {
+      "description": "Language and terminology consistency rules",
+      "rules": [
+        "Use consistent terminology across all character types",
+        "Maintain neutral, non-judgmental language",
+        "Avoid value-laden comparisons between types",
+        "Use descriptive rather than prescriptive language"
+      ]
+    }
+  },
+  "example_implementation": {
+    "nervous_type_schema": {
+      "formula": "EnAP",
+      "name": "Nerveux",
+      "english_name": "Nervous",
+      "historical_examples": ["Byron", "Edgar Allan Poe", "Baudelaire"],
+      "core_traits": {
+        "emotionality": 8.5,
+        "activity": 2.0, 
+        "resonance_primary": 8.0,
+        "resonance_secondary": 2.0
+      },
+      "diagnostic_indicators": {
+        "verbal_patterns": [
+          "Expressive, dramatic language",
+          "Frequent use of superlatives",
+          "Emotional coloring of descriptions",
+          "Tendency to exaggerate events"
+        ],
+        "nonverbal_cues": [
+          "Animated gestures and expressions",
+          "Variable posture and movement",
+          "Rapid changes in facial expression",
+          "Fidgeting or restless behavior"
+        ],
+        "behavioral_markers": [
+          "Starts projects enthusiastically but doesn't finish",
+          "Seeks novelty and stimulation",
+          "Mood swings and emotional reactivity",
+          "Difficulty with routine tasks"
+        ],
+        "emotional_responses": [
+          "Intense immediate reactions",
+          "Quick shifts between emotions",
+          "Easily moved by minor events",
+          "Seeks emotional stimulation"
+        ]
+      },
+      "assessment_questions": [
+        {
+          "question": "Do you often start projects with great enthusiasm but find it hard to see them through?",
+          "dimension": "activity",
+          "type_indicator": "Yes indicates non-active tendency",
+          "scoring_weight": 0.8
+        },
+        {
+          "question": "Are you easily affected by the mood of movies, music, or books?",
+          "dimension": "emotionality", 
+          "type_indicator": "Yes indicates high emotionality",
+          "scoring_weight": 0.9
+        },
+        {
+          "question": "Do you prefer to act on your first impulse rather than thinking things through?",
+          "dimension": "resonance",
+          "type_indicator": "Yes indicates primary resonance",
+          "scoring_weight": 0.7
+        }
+      ]
+    }
+  }
+}

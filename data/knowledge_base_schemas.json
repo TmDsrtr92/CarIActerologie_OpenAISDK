@@ -1,0 +1,899 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Characterology Knowledge Base Schemas",
+  "description": "JSON Schema definitions for characterology knowledge representation and validation",
+  "version": "1.0.0",
+  "definitions": {
+    "characterology_metadata": {
+      "type": "object",
+      "title": "Knowledge Base Metadata",
+      "description": "Metadata for characterology knowledge base files",
+      "required": ["version", "created", "description", "language"],
+      "properties": {
+        "version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$",
+          "description": "Semantic version number"
+        },
+        "created": {
+          "type": "string",
+          "format": "date",
+          "description": "Creation date in YYYY-MM-DD format"
+        },
+        "updated": {
+          "type": "string", 
+          "format": "date",
+          "description": "Last update date in YYYY-MM-DD format"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 500,
+          "description": "Brief description of the knowledge base content"
+        },
+        "language": {
+          "type": "string",
+          "enum": ["fr", "en", "multilingual"],
+          "description": "Primary language of the content"
+        },
+        "contributors": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of contributors or sources"
+        },
+        "source_documents": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Source documents referenced"
+        },
+        "validation_status": {
+          "type": "string",
+          "enum": ["validated", "pending", "draft"],
+          "description": "Validation status of the content"
+        }
+      }
+    },
+    "character_formula": {
+      "type": "string",
+      "pattern": "^(E|nE)(A|nA)(P|S)$",
+      "title": "Character Formula",
+      "description": "Three-letter character type formula (Emotionality-Activity-Resonance)",
+      "examples": ["EAS", "nEAP", "EnAS"]
+    },
+    "trait_score": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 10.0,
+      "title": "Trait Score",
+      "description": "Numerical score for personality trait intensity (0=minimal, 10=maximal)"
+    },
+    "confidence_score": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "title": "Confidence Score", 
+      "description": "Confidence level in analysis or assessment (0.0-1.0)"
+    },
+    "historical_person": {
+      "type": "object",
+      "title": "Historical Person Reference",
+      "description": "Reference to historical figure exemplifying character type",
+      "required": ["name", "character_type"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 2,
+          "description": "Full name of historical figure"
+        },
+        "character_type": {
+          "$ref": "#/definitions/character_type_name"
+        },
+        "dates": {
+          "type": "string",
+          "pattern": "^\\d{4}(-\\d{4})?$",
+          "description": "Life dates (e.g., '1882-1954' or '1770')"
+        },
+        "profession": {
+          "type": "string",
+          "description": "Primary profession or field"
+        },
+        "notable_works": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Notable works or achievements"
+        },
+        "character_justification": {
+          "type": "string",
+          "description": "Explanation of why this person exemplifies the character type"
+        }
+      }
+    },
+    "character_type_name": {
+      "type": "string",
+      "enum": [
+        "nervous", "sentimental", "choleric", "passionate",
+        "sanguine", "phlegmatic", "amorphous", "apathetic"
+      ],
+      "title": "Character Type Name",
+      "description": "One of the eight Le Senne character types"
+    },
+    "psychological_dimension": {
+      "type": "string", 
+      "enum": ["emotionality", "activity", "resonance", "primary_resonance", "secondary_resonance"],
+      "title": "Psychological Dimension",
+      "description": "Core psychological dimensions in characterology"
+    },
+    "behavioral_pattern": {
+      "type": "object",
+      "title": "Behavioral Pattern",
+      "description": "Description of behavioral pattern associated with character traits",
+      "required": ["pattern_name", "description"],
+      "properties": {
+        "pattern_name": {
+          "type": "string",
+          "minLength": 3,
+          "description": "Name of the behavioral pattern"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 10,
+          "description": "Detailed description of the pattern"
+        },
+        "related_dimensions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/psychological_dimension"
+          },
+          "description": "Psychological dimensions associated with this pattern"
+        },
+        "manifestation_contexts": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Contexts where this pattern typically manifests"
+        },
+        "observable_indicators": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Observable behaviors indicating this pattern"
+        }
+      }
+    },
+    "assessment_question": {
+      "type": "object",
+      "title": "Assessment Question",
+      "description": "Question for personality assessment",
+      "required": ["question_text", "target_dimension", "scoring_method"],
+      "properties": {
+        "question_id": {
+          "type": "string",
+          "description": "Unique identifier for the question"
+        },
+        "question_text": {
+          "type": "string",
+          "minLength": 10,
+          "description": "The assessment question text"
+        },
+        "target_dimension": {
+          "$ref": "#/definitions/psychological_dimension",
+          "description": "Primary dimension this question assesses"
+        },
+        "response_type": {
+          "type": "string",
+          "enum": ["yes_no", "likert_5", "likert_7", "multiple_choice", "open_ended"],
+          "description": "Type of response expected"
+        },
+        "scoring_method": {
+          "type": "object",
+          "properties": {
+            "positive_response": {
+              "type": "string",
+              "description": "Response indicating positive trait presence"
+            },
+            "score_weight": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Weight of this question in overall assessment"
+            },
+            "reverse_scored": {
+              "type": "boolean",
+              "description": "Whether this question is reverse scored"
+            }
+          }
+        },
+        "validation_data": {
+          "type": "object",
+          "properties": {
+            "test_retest_reliability": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0
+            },
+            "item_difficulty": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0
+            },
+            "discrimination_index": {
+              "type": "number",
+              "minimum": -1.0,
+              "maximum": 1.0
+            }
+          }
+        }
+      }
+    },
+    "therapeutic_recommendation": {
+      "type": "object",
+      "title": "Therapeutic Recommendation",
+      "description": "Therapeutic guidance for specific character types",
+      "required": ["character_type", "approach", "description"],
+      "properties": {
+        "character_type": {
+          "$ref": "#/definitions/character_type_name"
+        },
+        "approach": {
+          "type": "string",
+          "enum": [
+            "cognitive_behavioral", "psychodynamic", "humanistic", "gestalt",
+            "expressive_therapy", "mindfulness_based", "solution_focused"
+          ],
+          "description": "Recommended therapeutic approach"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 20,
+          "description": "Detailed description of the therapeutic approach"
+        },
+        "techniques": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Specific techniques recommended"
+        },
+        "contraindications": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Approaches to avoid with this character type"
+        },
+        "expected_challenges": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Potential challenges in therapy"
+        },
+        "success_indicators": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Signs of therapeutic progress"
+        }
+      }
+    }
+  },
+  "schemas": {
+    "main_knowledge_base": {
+      "$id": "characterology_knowledge_base.schema.json",
+      "type": "object",
+      "title": "Main Characterology Knowledge Base",
+      "description": "Complete characterology knowledge base with framework and character types",
+      "required": ["metadata", "framework", "character_types"],
+      "properties": {
+        "metadata": {
+          "$ref": "#/definitions/characterology_metadata"
+        },
+        "framework": {
+          "type": "object",
+          "title": "Characterology Framework",
+          "required": ["name", "description", "fundamental_principle", "constitutive_properties"],
+          "properties": {
+            "name": {
+              "type": "string",
+              "const": "Le Senne Characterology"
+            },
+            "description": {
+              "type": "string",
+              "minLength": 50
+            },
+            "fundamental_principle": {
+              "type": "string",
+              "minLength": 20
+            },
+            "constitutive_properties": {
+              "type": "object",
+              "required": ["emotionality", "activity", "resonance"],
+              "properties": {
+                "emotionality": {
+                  "type": "object",
+                  "required": ["symbol", "description", "emotional", "non_emotional"],
+                  "properties": {
+                    "symbol": {
+                      "type": "string",
+                      "const": "E/nE"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "emotional": {
+                      "type": "object",
+                      "required": ["symbol", "description", "characteristics"],
+                      "properties": {
+                        "symbol": {
+                          "const": "E"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "characteristics": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "minItems": 3
+                        }
+                      }
+                    },
+                    "non_emotional": {
+                      "type": "object",
+                      "required": ["symbol", "description", "characteristics"],
+                      "properties": {
+                        "symbol": {
+                          "const": "nE"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "characteristics": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "minItems": 3
+                        }
+                      }
+                    }
+                  }
+                },
+                "activity": {
+                  "type": "object",
+                  "required": ["symbol", "description", "active", "non_active"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "symbol": {
+                      "const": "A/nA"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "active": {
+                      "type": "object",
+                      "required": ["symbol", "description", "characteristics"],
+                      "properties": {
+                        "symbol": {
+                          "const": "A"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "characteristics": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "minItems": 3
+                        }
+                      }
+                    },
+                    "non_active": {
+                      "type": "object",
+                      "required": ["symbol", "description", "characteristics"],
+                      "properties": {
+                        "symbol": {
+                          "const": "nA"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "characteristics": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "minItems": 3
+                        }
+                      }
+                    }
+                  }
+                },
+                "resonance": {
+                  "type": "object",
+                  "required": ["symbol", "description", "primary", "secondary"],
+                  "properties": {
+                    "symbol": {
+                      "const": "P/S"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "primary": {
+                      "type": "object",
+                      "required": ["symbol", "description", "characteristics"],
+                      "properties": {
+                        "symbol": {
+                          "const": "P"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "characteristics": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "minItems": 3
+                        }
+                      }
+                    },
+                    "secondary": {
+                      "type": "object",
+                      "required": ["symbol", "description", "characteristics"],
+                      "properties": {
+                        "symbol": {
+                          "const": "S"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "characteristics": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "minItems": 3
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "character_types": {
+          "type": "object",
+          "title": "Character Types Collection",
+          "patternProperties": {
+            "^(nervous|sentimental|choleric|passionate|sanguine|phlegmatic|amorphous|apathetic)$": {
+              "$ref": "#/definitions/character_type_definition"
+            }
+          },
+          "minProperties": 8,
+          "maxProperties": 8
+        }
+      }
+    },
+    "character_type_definition": {
+      "type": "object",
+      "title": "Character Type Definition",
+      "description": "Complete definition of a character type",
+      "required": [
+        "formula", "name", "english_name", "core_traits", 
+        "description", "key_characteristics", "strengths", "challenges"
+      ],
+      "properties": {
+        "formula": {
+          "$ref": "#/definitions/character_formula"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 3,
+          "description": "French name of character type"
+        },
+        "english_name": {
+          "type": "string", 
+          "minLength": 3,
+          "description": "English name of character type"
+        },
+        "historical_examples": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "description": "Historical figures exemplifying this type"
+        },
+        "core_traits": {
+          "type": "object",
+          "required": ["emotionality", "activity", "resonance_primary", "resonance_secondary"],
+          "properties": {
+            "emotionality": {
+              "$ref": "#/definitions/trait_score"
+            },
+            "activity": {
+              "$ref": "#/definitions/trait_score"
+            },
+            "resonance_primary": {
+              "$ref": "#/definitions/trait_score"
+            },
+            "resonance_secondary": {
+              "$ref": "#/definitions/trait_score"
+            }
+          }
+        },
+        "description": {
+          "type": "string",
+          "minLength": 50,
+          "maxLength": 1000,
+          "description": "Comprehensive description of character type"
+        },
+        "key_characteristics": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 10
+          },
+          "minItems": 3,
+          "maxItems": 15,
+          "description": "Key defining characteristics"
+        },
+        "strengths": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 5
+          },
+          "minItems": 3,
+          "description": "Natural strengths of this character type"
+        },
+        "challenges": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 5
+          },
+          "minItems": 3,
+          "description": "Common challenges faced by this type"
+        },
+        "behavioral_patterns": {
+          "type": "object",
+          "required": ["work_style", "relationships", "decision_making", "stress_response"],
+          "properties": {
+            "work_style": {
+              "type": "string",
+              "minLength": 20
+            },
+            "relationships": {
+              "type": "string",
+              "minLength": 20
+            },
+            "decision_making": {
+              "type": "string",
+              "minLength": 20
+            },
+            "stress_response": {
+              "type": "string",
+              "minLength": 20
+            }
+          }
+        },
+        "subtypes": {
+          "type": "object",
+          "patternProperties": {
+            "^[a-z_]+$": {
+              "type": "object",
+              "properties": {
+                "characteristics": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "examples": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "description": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "psychological_taxonomy": {
+      "$id": "psychological_traits_taxonomy.schema.json",
+      "type": "object",
+      "title": "Psychological Traits Taxonomy",
+      "required": ["metadata", "primary_dimensions"],
+      "properties": {
+        "metadata": {
+          "$ref": "#/definitions/characterology_metadata"
+        },
+        "primary_dimensions": {
+          "type": "object",
+          "required": ["emotionality", "activity", "resonance"],
+          "properties": {
+            "emotionality": {
+              "$ref": "#/definitions/dimension_definition"
+            },
+            "activity": {
+              "$ref": "#/definitions/dimension_definition"
+            },
+            "resonance": {
+              "$ref": "#/definitions/dimension_definition"
+            }
+          }
+        },
+        "supplementary_properties": {
+          "type": "object"
+        },
+        "trait_interactions": {
+          "type": "object"
+        }
+      }
+    },
+    "dimension_definition": {
+      "type": "object",
+      "title": "Psychological Dimension Definition",
+      "required": ["definition", "measurement_scale", "subtypes"],
+      "properties": {
+        "definition": {
+          "type": "string",
+          "minLength": 20
+        },
+        "measurement_scale": {
+          "type": "string"
+        },
+        "neurobiological_basis": {
+          "type": "string"
+        },
+        "subtypes": {
+          "type": "object"
+        },
+        "assessment_domains": {
+          "type": "object"
+        }
+      }
+    },
+    "assessment_protocol": {
+      "$id": "assessment_protocol.schema.json",
+      "type": "object",
+      "title": "Characterology Assessment Protocol",
+      "required": ["metadata", "protocol_name", "questions", "scoring"],
+      "properties": {
+        "metadata": {
+          "$ref": "#/definitions/characterology_metadata"
+        },
+        "protocol_name": {
+          "type": "string",
+          "minLength": 5
+        },
+        "protocol_version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+$"
+        },
+        "target_population": {
+          "type": "string"
+        },
+        "administration_time": {
+          "type": "integer",
+          "minimum": 5,
+          "maximum": 180,
+          "description": "Estimated administration time in minutes"
+        },
+        "questions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/assessment_question"
+          },
+          "minItems": 10
+        },
+        "scoring": {
+          "type": "object",
+          "required": ["method", "interpretation"],
+          "properties": {
+            "method": {
+              "type": "string",
+              "enum": ["weighted_sum", "profile_matching", "factor_analysis"]
+            },
+            "interpretation": {
+              "type": "object",
+              "properties": {
+                "score_ranges": {
+                  "type": "object"
+                },
+                "confidence_levels": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "validation_data": {
+          "type": "object",
+          "properties": {
+            "reliability": {
+              "type": "object",
+              "properties": {
+                "internal_consistency": {
+                  "type": "number",
+                  "minimum": 0.0,
+                  "maximum": 1.0
+                },
+                "test_retest": {
+                  "type": "number",
+                  "minimum": 0.0,
+                  "maximum": 1.0
+                }
+              }
+            },
+            "validity": {
+              "type": "object",
+              "properties": {
+                "construct_validity": {
+                  "type": "number",
+                  "minimum": 0.0,
+                  "maximum": 1.0
+                },
+                "criterion_validity": {
+                  "type": "number",
+                  "minimum": 0.0,
+                  "maximum": 1.0
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "therapeutic_guidelines": {
+      "$id": "therapeutic_guidelines.schema.json", 
+      "type": "object",
+      "title": "Therapeutic Guidelines for Character Types",
+      "required": ["metadata", "guidelines"],
+      "properties": {
+        "metadata": {
+          "$ref": "#/definitions/characterology_metadata"
+        },
+        "guidelines": {
+          "type": "object",
+          "patternProperties": {
+            "^(nervous|sentimental|choleric|passionate|sanguine|phlegmatic|amorphous|apathetic)$": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/therapeutic_recommendation"
+              },
+              "minItems": 1
+            }
+          }
+        },
+        "general_principles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "General therapeutic principles for characterology"
+        }
+      }
+    }
+  },
+  "validation_rules": {
+    "character_type_consistency": {
+      "description": "Validation rules for character type consistency",
+      "rules": [
+        {
+          "rule": "formula_trait_consistency",
+          "description": "Core traits must match character formula",
+          "validation": {
+            "if_formula_contains_E": "emotionality >= 6.0",
+            "if_formula_contains_nE": "emotionality <= 4.0",
+            "if_formula_contains_A": "activity >= 6.0",
+            "if_formula_contains_nA": "activity <= 4.0",
+            "if_formula_contains_P": "resonance_primary >= 6.0 && resonance_secondary <= 4.0",
+            "if_formula_contains_S": "resonance_secondary >= 6.0 && resonance_primary <= 4.0"
+          }
+        },
+        {
+          "rule": "complementary_scores",
+          "description": "Primary and secondary resonance should be complementary",
+          "validation": "resonance_primary + resonance_secondary <= 12.0"
+        },
+        {
+          "rule": "historical_examples_minimum",
+          "description": "Each character type must have at least one historical example",
+          "validation": "historical_examples.length >= 1"
+        }
+      ]
+    },
+    "content_quality": {
+      "description": "Content quality validation rules",
+      "rules": [
+        {
+          "rule": "description_length",
+          "description": "Descriptions must be substantial but not excessive",
+          "validation": "description.length >= 50 && description.length <= 1000"
+        },
+        {
+          "rule": "characteristic_minimum",
+          "description": "Minimum number of key characteristics required",
+          "validation": "key_characteristics.length >= 3"
+        },
+        {
+          "rule": "strengths_challenges_balance",
+          "description": "Balanced representation of strengths and challenges",
+          "validation": "strengths.length >= 3 && challenges.length >= 3"
+        }
+      ]
+    },
+    "linguistic_consistency": {
+      "description": "Language and terminology consistency rules",
+      "rules": [
+        {
+          "rule": "neutral_language",
+          "description": "Use neutral, non-judgmental language",
+          "validation": "avoid words: 'bad', 'good', 'superior', 'inferior'"
+        },
+        {
+          "rule": "consistent_terminology",
+          "description": "Use consistent terminology across all character types",
+          "validation": "standardized character property names and descriptions"
+        },
+        {
+          "rule": "professional_tone",
+          "description": "Maintain professional, scientific tone",
+          "validation": "avoid colloquialisms and emotional language"
+        }
+      ]
+    }
+  },
+  "usage_examples": {
+    "character_type_validation": {
+      "description": "Example of validating a character type definition",
+      "example": {
+        "formula": "EAS",
+        "name": "Passionné",
+        "english_name": "Passionate",
+        "core_traits": {
+          "emotionality": 9.0,
+          "activity": 9.0,
+          "resonance_primary": 2.0,
+          "resonance_secondary": 9.0
+        },
+        "description": "The most intense character combining all three powers...",
+        "validation_result": "PASS - Formula EAS consistent with high E(9.0), high A(9.0), high S(9.0)"
+      }
+    },
+    "assessment_question_validation": {
+      "description": "Example of validating an assessment question",
+      "example": {
+        "question_text": "Do you often start projects with great enthusiasm but find it hard to see them through?",
+        "target_dimension": "activity",
+        "response_type": "yes_no",
+        "scoring_method": {
+          "positive_response": "yes",
+          "score_weight": 0.8,
+          "reverse_scored": true
+        },
+        "validation_result": "PASS - Targets activity dimension with appropriate reverse scoring"
+      }
+    }
+  }
+}

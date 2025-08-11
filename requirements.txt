@@ -12,8 +12,16 @@ python-dateutil>=2.8.2
 # Report generation
 reportlab>=4.0.0
 
-# For future AI integration (Phase 2+)
-# openai>=1.10.0
-# mem0ai>=0.1.0  
-# faiss-cpu>=1.7.4
+# Configuration management
+python-dotenv>=1.0.0
+
+# JSON Schema validation
+jsonschema>=4.17.0
+
+# AI Integration (for knowledge base)
+openai>=1.10.0
+faiss-cpu>=1.7.4
+mem0ai>=0.1.0
+
+# Future integrations (Phase 2+)
 # supabase>=2.3.0

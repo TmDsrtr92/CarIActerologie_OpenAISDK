@@ -1,0 +1,538 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "created": "2025-01-11",
+    "description": "Comprehensive taxonomy of psychological traits and patterns for characterology",
+    "based_on": [
+      "René Le Senne - Traité de Caractérologie",
+      "Heymans-Wiersma statistical studies",
+      "Contemporary personality psychology research"
+    ],
+    "taxonomy_structure": "hierarchical_classification"
+  },
+  "primary_dimensions": {
+    "emotionality": {
+      "definition": "Capacity for emotional arousal and affective response intensity",
+      "measurement_scale": "0-10 (non-emotional to highly emotional)",
+      "neurobiological_basis": "Limbic system reactivity, autonomic nervous system sensitivity",
+      "subtypes": {
+        "high_emotionality": {
+          "range": "6-10",
+          "characteristics": [
+            "Strong emotional reactions to stimuli",
+            "High sensitivity to environmental changes", 
+            "Intense affective experiences",
+            "Rapid emotional contagion from others"
+          ],
+          "behavioral_manifestations": {
+            "physiological": [
+              "Visible emotional expressions",
+              "Autonomic arousal (blushing, sweating)",
+              "Voice modulation during emotional states",
+              "Gesture intensity variation"
+            ],
+            "cognitive": [
+              "Emotionally colored memory encoding",
+              "Mood-dependent information processing",
+              "Emotional reasoning bias",
+              "Attention capture by emotional stimuli"
+            ],
+            "social": [
+              "Empathetic responsiveness",
+              "Emotional expressiveness in relationships",
+              "Susceptibility to social emotional climate",
+              "Strong attachment formation"
+            ]
+          }
+        },
+        "low_emotionality": {
+          "range": "0-4",
+          "characteristics": [
+            "Stable emotional baseline",
+            "Reduced reactivity to emotional stimuli",
+            "Objective information processing",
+            "Emotional regulation ease"
+          ],
+          "behavioral_manifestations": {
+            "physiological": [
+              "Controlled emotional expression",
+              "Stable autonomic responses",
+              "Consistent vocal patterns",
+              "Minimal gesture variation"
+            ],
+            "cognitive": [
+              "Fact-based information processing",
+              "Mood-independent reasoning",
+              "Analytical problem-solving approach",
+              "Attention to logical structure"
+            ],
+            "social": [
+              "Measured social responses",
+              "Professional relationship style",
+              "Independence from group emotions",
+              "Selective attachment formation"
+            ]
+          }
+        }
+      },
+      "assessment_domains": {
+        "stress_reactivity": {
+          "indicators": [
+            "Response to unexpected events",
+            "Recovery time from emotional disturbance",
+            "Physiological stress markers",
+            "Coping strategy preferences"
+          ]
+        },
+        "interpersonal_sensitivity": {
+          "indicators": [
+            "Recognition of others' emotions",
+            "Response to social approval/disapproval",
+            "Reaction to interpersonal conflict",
+            "Empathetic concern demonstration"
+          ]
+        },
+        "aesthetic_responsiveness": {
+          "indicators": [
+            "Reaction to art, music, literature",
+            "Appreciation of beauty and harmony",
+            "Emotional response to nature",
+            "Creative expression tendency"
+          ]
+        }
+      }
+    },
+    "activity": {
+      "definition": "Disposition to initiate and sustain action, especially when facing obstacles",
+      "measurement_scale": "0-10 (non-active to highly active)",
+      "neurobiological_basis": "Dopaminergic pathways, motor system activation, executive function",
+      "subtypes": {
+        "high_activity": {
+          "range": "6-10", 
+          "characteristics": [
+            "Spontaneous action initiation",
+            "Persistence in face of obstacles",
+            "Energy for sustained effort",
+            "Goal-directed behavior orientation"
+          ],
+          "behavioral_manifestations": {
+            "physical": [
+              "High energy levels",
+              "Restlessness when inactive",
+              "Quick movement patterns",
+              "Physical exercise preference"
+            ],
+            "cognitive": [
+              "Task-focused attention",
+              "Problem-solving persistence",
+              "Implementation planning",
+              "Goal-oriented thinking"
+            ],
+            "social": [
+              "Leadership initiative",
+              "Group activity organization",
+              "Influence assertion",
+              "Change agent behavior"
+            ]
+          }
+        },
+        "low_activity": {
+          "range": "0-4",
+          "characteristics": [
+            "Preference for contemplation over action",
+            "Easily discouraged by obstacles",
+            "Need for external motivation",
+            "Conservation of energy"
+          ],
+          "behavioral_manifestations": {
+            "physical": [
+              "Low energy expenditure",
+              "Comfort with sedentary activities",
+              "Slow, deliberate movements",
+              "Minimal physical restlessness"
+            ],
+            "cognitive": [
+              "Reflective thought processes",
+              "Analysis over implementation",
+              "Perfectionist tendencies",
+              "Contemplative problem-solving"
+            ],
+            "social": [
+              "Follower orientation",
+              "Preference for structured activities",
+              "Influence receptivity",
+              "Stability maintenance"
+            ]
+          }
+        }
+      },
+      "assessment_domains": {
+        "initiative_taking": {
+          "indicators": [
+            "Frequency of self-started projects",
+            "Response to leadership opportunities",
+            "Reaction to unstructured situations",
+            "Innovation and change introduction"
+          ]
+        },
+        "persistence": {
+          "indicators": [
+            "Task completion rates",
+            "Response to obstacles and setbacks",
+            "Long-term goal pursuit",
+            "Effort sustainability"
+          ]
+        },
+        "energy_management": {
+          "indicators": [
+            "Daily energy patterns",
+            "Recovery from exertion",
+            "Activity preference intensity",
+            "Rest and activity balance"
+          ]
+        }
+      }
+    },
+    "resonance": {
+      "definition": "Temporal pattern of how impressions affect consciousness and behavior",
+      "measurement_approach": "primary_vs_secondary_dominance",
+      "neurobiological_basis": "Neural plasticity, memory consolidation, temporal lobe function",
+      "subtypes": {
+        "primary_resonance": {
+          "characteristics": [
+            "Immediate maximum impact of impressions",
+            "Rapid exhaustion of effect",
+            "Present-moment focus",
+            "Quick adaptation to new situations"
+          ],
+          "temporal_patterns": {
+            "short_term": [
+              "Immediate intense reactions",
+              "Rapid mood changes",
+              "Quick forgiveness and forgetting",
+              "Present-focused decision making"
+            ],
+            "medium_term": [
+              "Low impression persistence",
+              "Flexible behavioral patterns",
+              "Adaptable routines",
+              "Variable interest maintenance"
+            ],
+            "long_term": [
+              "Limited long-term planning",
+              "Inconsistent goal pursuit",
+              "Variable relationship patterns",
+              "Spontaneous life direction changes"
+            ]
+          }
+        },
+        "secondary_resonance": {
+          "characteristics": [
+            "Slow impression inscription",
+            "Durable behavioral influence",
+            "Past and future orientation",
+            "Systematic accumulation of experiences"
+          ],
+          "temporal_patterns": {
+            "short_term": [
+              "Delayed emotional responses",
+              "Gradual mood development", 
+              "Long-lasting grudges and gratitudes",
+              "Future-consequence consideration"
+            ],
+            "medium_term": [
+              "Strong impression persistence",
+              "Stable behavioral patterns",
+              "Consistent routines",
+              "Maintained interest focus"
+            ],
+            "long_term": [
+              "Extensive long-term planning",
+              "Persistent goal pursuit",
+              "Stable relationship patterns",
+              "Consistent life direction"
+            ]
+          }
+        }
+      },
+      "assessment_domains": {
+        "temporal_orientation": {
+          "indicators": [
+            "Reference to past events frequency",
+            "Future planning horizon",
+            "Present moment awareness",
+            "Time perspective in decision-making"
+          ]
+        },
+        "impression_durability": {
+          "indicators": [
+            "Memory for past experiences",
+            "Grudge and gratitude persistence",
+            "Habit formation and maintenance",
+            "Routine adherence patterns"
+          ]
+        },
+        "behavioral_consistency": {
+          "indicators": [
+            "Predictability across situations",
+            "Goal pursuit consistency",
+            "Value system stability",
+            "Relationship pattern consistency"
+          ]
+        }
+      }
+    }
+  },
+  "supplementary_properties": {
+    "consciousness_field": {
+      "definition": "Breadth vs narrowness of conscious attention and awareness",
+      "dimensions": {
+        "wide_consciousness": {
+          "characteristics": [
+            "Multiple simultaneous attention foci",
+            "Rich peripheral awareness",
+            "Contextual information integration",
+            "Holistic perspective tendency"
+          ],
+          "cognitive_style": [
+            "Global processing preference",
+            "Pattern recognition ability",
+            "Intuitive insight generation",
+            "Complexity tolerance"
+          ]
+        },
+        "narrow_consciousness": {
+          "characteristics": [
+            "Single focused attention",
+            "Detail-oriented processing",
+            "Sequential information handling",
+            "Analytical perspective tendency"
+          ],
+          "cognitive_style": [
+            "Local processing preference",
+            "Detail detection ability",
+            "Logical analysis strength",
+            "Simplification tendency"
+          ]
+        }
+      }
+    },
+    "analytical_intelligence": {
+      "definition": "Aptitude for abstraction, analysis, and conceptual manipulation",
+      "components": {
+        "logical_analysis": [
+          "Abstract reasoning ability",
+          "Concept formation skill",
+          "Logical relationship detection",
+          "Rule extraction capacity"
+        ],
+        "creative_synthesis": [
+          "Novel connection generation",
+          "Original idea production",
+          "Innovative solution finding",
+          "Conceptual combination ability"
+        ]
+      }
+    },
+    "orientation_focus": {
+      "definition": "Direction of primary interest and energy investment",
+      "types": {
+        "egocentric": {
+          "characteristics": [
+            "Self-focused attention",
+            "Personal perspective primacy",
+            "Individual need prioritization",
+            "Internal reference frame"
+          ]
+        },
+        "allocentric": {
+          "characteristics": [
+            "Other-focused attention",
+            "External perspective consideration",
+            "Social need recognition",
+            "External reference frame"
+          ]
+        }
+      }
+    },
+    "structural_modes": {
+      "definition": "Patterns of mental organization and systematization",
+      "levels": {
+        "juxtaposition": {
+          "description": "Ideas exist separately without connection",
+          "characteristics": [
+            "Compartmentalized thinking",
+            "Limited integration",
+            "Simple associations",
+            "Basic organization"
+          ]
+        },
+        "pluralism": {
+          "description": "Multiple independent organization centers",
+          "characteristics": [
+            "Multiple perspective ability",
+            "Parallel processing capacity",
+            "Diverse interest maintenance",
+            "Flexible categorization"
+          ]
+        },
+        "systematic_integration": {
+          "description": "Unified organizational framework",
+          "characteristics": [
+            "Hierarchical organization",
+            "Principle-based integration",
+            "Systematic coherence",
+            "Comprehensive frameworks"
+          ]
+        }
+      }
+    }
+  },
+  "trait_interactions": {
+    "emotion_activity_combinations": {
+      "high_emotion_high_activity": {
+        "resulting_patterns": [
+          "Passionate engagement",
+          "Intense goal pursuit",
+          "Expressive action",
+          "Dramatic behavior"
+        ],
+        "character_types": ["choleric", "passionate"]
+      },
+      "high_emotion_low_activity": {
+        "resulting_patterns": [
+          "Intense inner experience",
+          "Emotional contemplation",
+          "Sensitive withdrawal",
+          "Artistic expression"
+        ],
+        "character_types": ["nervous", "sentimental"]
+      },
+      "low_emotion_high_activity": {
+        "resulting_patterns": [
+          "Efficient task focus",
+          "Practical achievement",
+          "Objective action",
+          "Systematic progress"
+        ],
+        "character_types": ["sanguine", "phlegmatic"]
+      },
+      "low_emotion_low_activity": {
+        "resulting_patterns": [
+          "Passive observation",
+          "Minimal engagement",
+          "Routine adherence",
+          "Conservative behavior"
+        ],
+        "character_types": ["amorphous", "apathetic"]
+      }
+    },
+    "resonance_modulation_effects": {
+      "primary_modulation": {
+        "on_emotionality": [
+          "Immediate emotional expression",
+          "Rapid mood shifts",
+          "Spontaneous reactions",
+          "Present-focused feelings"
+        ],
+        "on_activity": [
+          "Impulsive action initiation",
+          "Variable energy application",
+          "Quick task switching",
+          "Opportunistic behavior"
+        ]
+      },
+      "secondary_modulation": {
+        "on_emotionality": [
+          "Delayed emotional processing",
+          "Persistent mood states",
+          "Reflective reactions",
+          "Past-future emotional integration"
+        ],
+        "on_activity": [
+          "Planned action initiation",
+          "Sustained energy application",
+          "Persistent task focus",
+          "Strategic behavior"
+        ]
+      }
+    }
+  },
+  "developmental_patterns": {
+    "trait_stability": {
+      "core_dimensions": {
+        "stability_level": "high",
+        "change_potential": "limited_to_expression_modulation",
+        "critical_periods": [
+          "Early childhood formation (0-7 years)",
+          "Adolescent crystallization (12-18 years)",
+          "Early adult stabilization (18-25 years)"
+        ]
+      },
+      "expression_variability": {
+        "factors": [
+          "Environmental demands",
+          "Social role requirements",
+          "Health and energy levels",
+          "Life experience accumulation"
+        ]
+      }
+    },
+    "maturation_effects": {
+      "emotionality_changes": [
+        "Increased emotional regulation with age",
+        "More sophisticated expression modulation",
+        "Greater emotional complexity understanding",
+        "Enhanced empathy development"
+      ],
+      "activity_changes": [
+        "Physical energy decline with age",
+        "Increased strategic activity focus",
+        "Greater efficiency in action",
+        "More selective goal pursuit"
+      ],
+      "resonance_changes": [
+        "Increased secondary tendencies with age",
+        "Greater reflection capacity",
+        "Enhanced long-term planning",
+        "More stable behavioral patterns"
+      ]
+    }
+  },
+  "assessment_applications": {
+    "diagnostic_indicators": {
+      "behavioral_observation": [
+        "Response patterns to standard situations",
+        "Decision-making process analysis",
+        "Social interaction style assessment",
+        "Stress response evaluation"
+      ],
+      "self_report_measures": [
+        "Trait-specific questionnaire responses",
+        "Biographical pattern analysis",
+        "Value and preference identification",
+        "Self-perception accuracy assessment"
+      ],
+      "performance_based_assessment": [
+        "Task completion style analysis",
+        "Problem-solving approach evaluation",
+        "Creative expression assessment",
+        "Leadership behavior observation"
+      ]
+    },
+    "validation_criteria": {
+      "internal_consistency": [
+        "Cross-domain trait expression coherence",
+        "Temporal stability demonstration",
+        "Context-appropriate variation patterns",
+        "Logical trait combination presentation"
+      ],
+      "external_validation": [
+        "Observer rating correspondence",
+        "Behavioral prediction accuracy",
+        "Life outcome correlation",
+        "Therapeutic response prediction"
+      ]
+    }
+  }
+}

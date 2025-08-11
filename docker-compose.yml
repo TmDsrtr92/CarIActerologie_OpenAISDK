@@ -1,0 +1,63 @@
+# Docker Compose configuration for CarIActerology
+# Useful for containerized deployment
+
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "8501:8501"
+    environment:
+      # API Keys (override with actual values or use .env file)
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-sk-dummy-openai-api-key-replace-with-your-actual-key-here}
+      - MEM0_API_KEY=${MEM0_API_KEY:-mem0-dummy-api-key-replace-with-actual-key}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-sk-ant-dummy-anthropic-key-replace-with-actual}
+      
+      # Model Configuration
+      - DEFAULT_LLM_MODEL=${DEFAULT_LLM_MODEL:-gpt-4o-mini}
+      - DEFAULT_EMBEDDING_MODEL=${DEFAULT_EMBEDDING_MODEL:-text-embedding-3-small}
+      
+      # Application Settings
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+      - DEBUG_MODE=${DEBUG_MODE:-false}
+      - DEVELOPMENT_MODE=${DEVELOPMENT_MODE:-false}
+      
+      # Performance Settings
+      - MAX_EMBEDDING_BATCH_SIZE=${MAX_EMBEDDING_BATCH_SIZE:-100}
+      - MEMORY_CACHE_SIZE=${MEMORY_CACHE_SIZE:-1000}
+    
+    volumes:
+      # Mount data directory for persistence
+      - ./data:/app/data
+      - ./logs:/app/logs
+    
+    env_file:
+      # Load environment variables from .env file
+      - .env
+    
+    restart: unless-stopped
+    
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8501/_stcore/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Optional: Redis for caching (if needed in future)
+  # redis:
+  #   image: redis:7-alpine
+  #   ports:
+  #     - "6379:6379"
+  #   volumes:
+  #     - redis_data:/data
+  #   restart: unless-stopped
+
+# Optional: Volumes for data persistence
+# volumes:
+#   redis_data:
+
+networks:
+  default:
+    name: cariacterology_network
