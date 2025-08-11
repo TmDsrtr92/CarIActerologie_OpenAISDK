@@ -15,7 +15,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from modules.report_generator import generate_report, get_available_report_types
 
 st.set_page_config(
-    page_title="Reports - CarIActerology",
+    page_title="Rapports - CarIActérologie",
     page_icon="📄",
     layout="wide"
 )
@@ -319,36 +319,36 @@ def main():
     # Header with help tooltip
     st.markdown("""
     <div style="background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); padding: 1rem; border-radius: 10px; margin-bottom: 2rem; color: white; text-align: center;">
-        <h1>📄 Professional Analysis Reports 
+        <h1>📄 Rapports d'Analyse Professionnels 
             <span class="help-tooltip">❓
                 <span class="tooltiptext">
-                    Generate professional PDF reports of your psychological analysis, perfect for personal reflection or sharing with mental health professionals. Reports include character analysis, progress tracking, and insights.
+                    Générez des rapports PDF professionnels de votre analyse psychologique, parfaits pour la réflexion personnelle ou le partage avec des professionnels de la santé mentale. Les rapports incluent l'analyse de caractère, le suivi des progrès, et les insights.
                 </span>
             </span>
         </h1>
-        <p>Generate comprehensive PDF reports using advanced psychological analysis</p>
+        <p>Générez des rapports PDF complets utilisant une analyse psychologique avancée</p>
     </div>
     """, unsafe_allow_html=True)
     
     # First-time user guidance
     if "reports_visited" not in st.session_state:
         st.session_state.reports_visited = True
-        with st.expander("📋 Report Generation Guide - Click to Learn More", expanded=True):
+        with st.expander("📋 Guide de Génération de Rapports - Cliquez pour En Savoir Plus", expanded=True):
             st.markdown("""
             <div class="reports-help">
-                <h4>📖 Types of Reports Available</h4>
+                <h4>📖 Types de Rapports Disponibles</h4>
                 <ul>
-                    <li><strong>Character Analysis Report:</strong> Detailed breakdown of your personality type and traits</li>
-                    <li><strong>Progress Report:</strong> Track your personal development over time</li>
-                    <li><strong>Session Summary:</strong> Summary of insights from recent conversations</li>
+                    <li><strong>Rapport d'Analyse de Caractère :</strong> Analyse détaillée de votre type de personnalité et traits</li>
+                    <li><strong>Rapport de Progrès :</strong> Suivez votre développement personnel au fil du temps</li>
+                    <li><strong>Résumé de Session :</strong> Résumé des insights de conversations récentes</li>
                 </ul>
                 
-                <h4>💡 Best Practices for Reports</h4>
+                <h4>💡 Meilleures Pratiques pour les Rapports</h4>
                 <ul>
-                    <li>Generate reports monthly to track long-term changes</li>
-                    <li>Share with therapists or counselors for professional insight</li>
-                    <li>Keep personal copies for reflection and goal-setting</li>
-                    <li>Compare reports over time to see growth patterns</li>
+                    <li>Générez des rapports mensuellement pour suivre les changements à long terme</li>
+                    <li>Partagez avec des thérapeutes ou conseillers pour des insights professionnels</li>
+                    <li>Gardez des copies personnelles pour la réflexion et la définition d'objectifs</li>
+                    <li>Comparez les rapports au fil du temps pour voir les patterns de croissance</li>
                 </ul>
             </div>
             """, unsafe_allow_html=True)
@@ -357,7 +357,7 @@ def main():
     col1, col2 = st.columns([2, 1])
     
     with col1:
-        st.markdown("### 📊 Generate Professional Report")
+        st.markdown("### 📊 Générer un Rapport Professionnel")
         
         # Get available report types
         available_reports = get_available_report_types()

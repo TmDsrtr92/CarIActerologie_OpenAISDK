@@ -2,7 +2,9 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-First rule : never use emojis in your code or scripts
+First rule : never use emojis in your code or scripts. 
+
+Every text a user can read on the user interface has to be written in French. 
 
 ## Project Overview
 

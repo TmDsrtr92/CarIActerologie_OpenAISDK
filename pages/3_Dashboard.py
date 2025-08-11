@@ -11,7 +11,7 @@ import numpy as np
 from datetime import datetime, timedelta
 
 st.set_page_config(
-    page_title="Dashboard - CarIActerology",
+    page_title="Tableau de Bord - CarIActérologie",
     page_icon="📈",
     layout="wide"
 )
@@ -23,15 +23,15 @@ def create_progress_metrics():
     
     with col1:
         st.metric(
-            label="Total Sessions",
+            label="Sessions Totales",
             value="28",
-            delta="4 this week",
+            delta="4 cette semaine",
             delta_color="normal"
         )
     
     with col2:
         st.metric(
-            label="Self-Discovery Score",
+            label="Score de Découverte de Soi",
             value="78%",
             delta="+12%",
             delta_color="normal"
@@ -39,7 +39,7 @@ def create_progress_metrics():
     
     with col3:
         st.metric(
-            label="Insights Gained",
+            label="Insights Obtenus",
             value="45",
             delta="+8",
             delta_color="normal"
@@ -47,7 +47,7 @@ def create_progress_metrics():
     
     with col4:
         st.metric(
-            label="Character Confidence",
+            label="Confiance de Caractère",
             value="85%",
             delta="+3%",
             delta_color="normal"
@@ -87,11 +87,11 @@ def create_session_timeline():
         size='duration',
         color='insights',
         hover_data=['mood_before', 'mood_after', 'duration'],
-        title="Session Timeline & Character Development",
+        title="Chronologie des Sessions et Développement du Caractère",
         labels={
-            'character_confidence': 'Character Confidence %',
+            'character_confidence': 'Confiance de Caractère %',
             'date': 'Date',
-            'insights': 'Insights Gained'
+            'insights': 'Insights Obtenus'
         }
     )
     
@@ -204,8 +204,8 @@ def create_mood_tracking():
     ))
     
     fig.update_layout(
-        title="Mood Tracking (30 Days)",
-        yaxis_title="Mood Score (1-10)",
+        title="Suivi de l'Humeur (30 Jours)",
+        yaxis_title="Score d'Humeur (1-10)",
         xaxis_title="Date",
         height=300
     )
@@ -218,8 +218,8 @@ def main():
     # Header
     st.markdown("""
     <div style="background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); padding: 1rem; border-radius: 10px; margin-bottom: 2rem; color: white; text-align: center;">
-        <h1>📈 Personal Discovery Dashboard</h1>
-        <p>Track your journey of self-understanding</p>
+        <h1>📈 Tableau de Bord de Découverte Personnelle</h1>
+        <p>Suivez votre parcours de compréhension de soi</p>
     </div>
     """, unsafe_allow_html=True)
     
@@ -242,10 +242,10 @@ def main():
     
     with col2:
         # Weekly summary
-        st.markdown("### 📊 This Week Summary")
+        st.markdown("### 📊 Résumé de Cette Semaine")
         
         weekly_data = {
-            'Day': ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            'Day': ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'],
             'Sessions': [1, 0, 2, 1, 1, 0, 1],
             'Duration (min)': [25, 0, 45, 30, 20, 0, 35]
         }
@@ -256,19 +256,19 @@ def main():
             df_week, 
             x='Day', 
             y='Sessions',
-            title="Sessions This Week"
+            title="Sessions de Cette Semaine"
         )
         fig_week.update_traces(marker_color='#667eea')
         st.plotly_chart(fig_week, use_container_width=True)
         
         # Achievement badges
-        st.markdown("### 🏆 Recent Achievements")
+        st.markdown("### 🏆 Réalisations Récentes")
         
         achievements = [
-            {"name": "Deep Thinker", "desc": "5 sessions this week", "icon": "🧠"},
-            {"name": "Self Aware", "desc": "85% character confidence", "icon": "🎯"},
-            {"name": "Consistent", "desc": "7 day streak", "icon": "🔥"},
-            {"name": "Insightful", "desc": "45+ insights gained", "icon": "💡"}
+            {"name": "Penseur Profond", "desc": "5 sessions cette semaine", "icon": "🧠"},
+            {"name": "Conscient de Soi", "desc": "85% de confiance de caractère", "icon": "🎯"},
+            {"name": "Constant", "desc": "Série de 7 jours", "icon": "🔥"},
+            {"name": "Perspicace", "desc": "45+ insights obtenus", "icon": "💡"}
         ]
         
         for achievement in achievements:
@@ -284,32 +284,32 @@ def main():
     
     # Sidebar with tools
     with st.sidebar:
-        st.markdown("### 🛠️ Dashboard Tools")
+        st.markdown("### 🛠️ Outils du Tableau de Bord")
         
-        if st.button("📊 Update Analysis", use_container_width=True):
-            st.success("Dashboard data refreshed!")
+        if st.button("📊 Mettre à Jour l'Analyse", use_container_width=True):
+            st.success("Données du tableau de bord actualisées !")
         
-        if st.button("📥 Export Progress", use_container_width=True):
-            st.success("Progress data exported!")
+        if st.button("📥 Exporter les Progrès", use_container_width=True):
+            st.success("Données de progrès exportées !")
         
-        if st.button("🎯 Set Goals", use_container_width=True):
-            st.info("Goal setting feature coming soon!")
-        
-        st.markdown("---")
-        st.markdown("### 📅 Quick Stats")
-        st.markdown(f"**Today**: {datetime.now().strftime('%B %d, %Y')}")
-        st.markdown("**Active since**: January 1, 2024")
-        st.markdown("**Total time**: 12h 35m")
-        st.markdown("**Avg session**: 23 minutes")
+        if st.button("🎯 Définir des Objectifs", use_container_width=True):
+            st.info("Fonctionnalité de définition d'objectifs bientôt disponible !")
         
         st.markdown("---")
-        st.markdown("### 🎨 Mood Colors")
-        st.color_picker("Current mood color", "#667eea")
+        st.markdown("### 📅 Statistiques Rapides")
+        st.markdown(f"**Aujourd'hui** : {datetime.now().strftime('%B %d, %Y')}")
+        st.markdown("**Actif depuis** : 1er janvier 2024")
+        st.markdown("**Temps total** : 12h 35m")
+        st.markdown("**Session moyenne** : 23 minutes")
         
-        st.markdown("### 📝 Quick Note")
-        note = st.text_area("Add a quick reflection...", height=100)
-        if st.button("Save Note"):
-            st.success("Note saved to your journal!")
+        st.markdown("---")
+        st.markdown("### 🎨 Couleurs d'Humeur")
+        st.color_picker("Couleur d'humeur actuelle", "#667eea")
+        
+        st.markdown("### 📝 Note Rapide")
+        note = st.text_area("Ajoutez une réflexion rapide...", height=100)
+        if st.button("Sauvegarder la Note"):
+            st.success("Note sauvegardée dans votre journal !")
 
 if __name__ == "__main__":
     main()

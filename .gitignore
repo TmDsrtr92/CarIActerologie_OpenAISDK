@@ -103,6 +103,8 @@ celerybeat.pid
 
 # Environments
 .env
+.env.local
+.env.*.local
 .venv
 env/
 venv/
@@ -156,7 +158,25 @@ logs/
 temp/
 cache/
 
-# Future AI integration files (will be added in Phase 2)
-.env.local
+# API Keys and Sensitive Data
+*.key
+api_keys.json
+api_keys.txt
 openai_api_key.txt
 supabase_credentials.json
+secrets/
+config/secrets.json
+
+# FAISS Indices and Model Files
+*.index
+*.pkl
+data/*.index
+data/*.pkl
+data/characterology_faiss.index
+data/characterology_metadata.pkl
+data/mem0_faiss.index
+
+# Validation Reports
+data/validation_report_*.json
+
+# Future AI integration files (will be added in Phase 2)
