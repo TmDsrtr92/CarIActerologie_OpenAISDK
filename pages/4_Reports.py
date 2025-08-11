@@ -259,13 +259,99 @@ def create_download_button(report_content, filename):
 def main():
     """Main reports interface with professional PDF generation"""
     
-    # Header
+    # Add help tooltip CSS
+    st.markdown("""
+    <style>
+        .help-tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: help;
+            color: #ffffff;
+            margin-left: 5px;
+            opacity: 0.9;
+        }
+        .help-tooltip:hover {
+            opacity: 1;
+        }
+        .help-tooltip .tooltiptext {
+            visibility: hidden;
+            width: 280px;
+            background-color: #333;
+            color: #fff;
+            text-align: left;
+            border-radius: 6px;
+            padding: 10px;
+            position: absolute;
+            z-index: 1000;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -140px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        .help-tooltip .tooltiptext::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #333 transparent transparent transparent;
+        }
+        .help-tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+        .reports-help {
+            background: #e8f4fd;
+            border: 1px solid #2196F3;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+    </style>
+    """, unsafe_allow_html=True)
+    
+    # Header with help tooltip
     st.markdown("""
     <div style="background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); padding: 1rem; border-radius: 10px; margin-bottom: 2rem; color: white; text-align: center;">
-        <h1>📄 Professional Analysis Reports</h1>
+        <h1>📄 Professional Analysis Reports 
+            <span class="help-tooltip">❓
+                <span class="tooltiptext">
+                    Generate professional PDF reports of your psychological analysis, perfect for personal reflection or sharing with mental health professionals. Reports include character analysis, progress tracking, and insights.
+                </span>
+            </span>
+        </h1>
         <p>Generate comprehensive PDF reports using advanced psychological analysis</p>
     </div>
     """, unsafe_allow_html=True)
+    
+    # First-time user guidance
+    if "reports_visited" not in st.session_state:
+        st.session_state.reports_visited = True
+        with st.expander("📋 Report Generation Guide - Click to Learn More", expanded=True):
+            st.markdown("""
+            <div class="reports-help">
+                <h4>📖 Types of Reports Available</h4>
+                <ul>
+                    <li><strong>Character Analysis Report:</strong> Detailed breakdown of your personality type and traits</li>
+                    <li><strong>Progress Report:</strong> Track your personal development over time</li>
+                    <li><strong>Session Summary:</strong> Summary of insights from recent conversations</li>
+                </ul>
+                
+                <h4>💡 Best Practices for Reports</h4>
+                <ul>
+                    <li>Generate reports monthly to track long-term changes</li>
+                    <li>Share with therapists or counselors for professional insight</li>
+                    <li>Keep personal copies for reflection and goal-setting</li>
+                    <li>Compare reports over time to see growth patterns</li>
+                </ul>
+            </div>
+            """, unsafe_allow_html=True)
     
     # Report generation section
     col1, col2 = st.columns([2, 1])

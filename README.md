@@ -74,35 +74,63 @@ CarIActerology is designed to help users better understand themselves through me
 
 ### Prerequisites
 - Python 3.11 or higher
-- pip or Poetry for dependency management
+- Git for version control
+- Poetry (recommended) or pip for dependency management
 
 ### Installation
 
 #### Option 1: Using Poetry (Recommended)
 ```bash
-git clone <repository-url>
+# Clone the repository
+git clone https://github.com/your-org/cariacterology.git
 cd CarIActerology_OpenAISDK
+
+# Install Poetry if not already installed
+pip install poetry
+
+# Install dependencies and create virtual environment
 poetry install
+
+# Run the application
 poetry run streamlit run app.py
 ```
 
 #### Option 2: Using pip
 ```bash
-git clone <repository-url>
+# Clone the repository
+git clone https://github.com/your-org/cariacterology.git
 cd CarIActerology_OpenAISDK
+
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Install dependencies
 pip install -r requirements.txt
+
+# Run the application
 streamlit run app.py
 ```
 
 #### Option 3: Automated Setup (Windows)
 ```bash
-git clone <repository-url>
+# Clone and setup
+git clone https://github.com/your-org/cariacterology.git
 cd CarIActerology_OpenAISDK
 setup.bat
+
+# Run application
 run.bat
 ```
 
-Open your browser to `http://localhost:8501`
+The application will be available at `http://localhost:8501`
+
+### First-Time Setup Verification
+
+1. **Test the application**: Navigate through all pages (Chat, Analysis, Dashboard, Reports, Settings)
+2. **Verify mock data**: Character analysis should show realistic personality data
+3. **Test report generation**: Generate a sample PDF report
+4. **Check help system**: All pages should have contextual help and tooltips
 
 ## Project Structure
 
@@ -156,6 +184,81 @@ CarIActerology_OpenAISDK/
 - [ ] Dynamic report generation
 - [ ] End-to-end testing
 
+## Development Setup
+
+### Development Environment
+
+```bash
+# Clone repository
+git clone https://github.com/your-org/cariacterology.git
+cd CarIActerology_OpenAISDK
+
+# Install development dependencies
+poetry install --with dev
+
+# Install pre-commit hooks
+pre-commit install
+
+# Run tests
+poetry run pytest
+
+# Run linting
+poetry run ruff check .
+poetry run black --check .
+poetry run mypy .
+```
+
+### Development Workflow
+
+1. **Create feature branch**: `git checkout -b feature/your-feature-name`
+2. **Make changes**: Follow coding standards and write tests
+3. **Run quality checks**: `poetry run pytest && poetry run ruff check .`
+4. **Commit changes**: Pre-commit hooks will run automatically
+5. **Push and create PR**: All CI/CD checks must pass
+
+### Testing
+
+```bash
+# Run all tests
+poetry run pytest
+
+# Run specific test categories
+poetry run pytest -m unit          # Unit tests only
+poetry run pytest -m integration   # Integration tests only
+poetry run pytest -m ui           # UI tests only
+
+# Run with coverage
+poetry run pytest --cov=. --cov-report=html
+
+# View coverage report
+open htmlcov/index.html
+```
+
+### Code Quality Tools
+
+- **Ruff**: Fast Python linter for code quality
+- **Black**: Code formatter for consistent styling
+- **mypy**: Static type checker
+- **pytest**: Testing framework with coverage
+- **pre-commit**: Git hooks for automated quality checks
+
+## CI/CD Pipeline
+
+### GitHub Actions Workflows
+
+- **Code Quality**: Linting, formatting, and type checking
+- **Testing**: Unit, integration, and UI tests with coverage reporting
+- **Security**: Bandit security scanning and dependency vulnerability checks
+- **Build Validation**: Import validation and mock data integrity checks
+
+### Branch Protection
+
+- **Main branch**: Requires PR approval and all CI/CD checks to pass
+- **Develop branch**: Requires CI/CD checks, less strict approval requirements
+- **Feature branches**: No restrictions to allow rapid development
+
+See `.github/BRANCH_PROTECTION_SETUP.md` for detailed configuration instructions.
+
 ## Contributing
 
 This project follows strict development standards:
@@ -164,6 +267,18 @@ This project follows strict development standards:
 - **Documentation**: Google-style docstrings for all functions
 - **Linting**: Ruff for code quality, Black for formatting
 - **Architecture**: SOLID principles and clean code practices
+- **Security**: All code must pass security scanning (Bandit)
+- **Reviews**: All changes require code review before merging
+
+### Contributing Guidelines
+
+1. **Fork the repository** and create your feature branch
+2. **Follow coding standards**: Use provided linters and formatters
+3. **Write comprehensive tests**: Maintain high test coverage
+4. **Document your code**: Include docstrings and update documentation
+5. **Test thoroughly**: Run full test suite before submitting PR
+6. **Keep commits focused**: One logical change per commit
+7. **Update CHANGELOG**: Document user-facing changes
 
 ## License
 

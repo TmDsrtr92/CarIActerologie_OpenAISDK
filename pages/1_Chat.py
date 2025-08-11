@@ -68,7 +68,7 @@ def main():
     """Main chat interface"""
     initialize_session_state()
     
-    # Custom CSS for chat interface
+    # Custom CSS for chat interface with help tooltips
     st.markdown("""
     <style>
         /* Fix viewport to prevent any scrolling */
@@ -110,14 +110,76 @@ def main():
             margin-top: 0.5rem;
             margin-bottom: 0;
         }
+        
+        /* Help Tooltip Styles */
+        .help-tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: help;
+            color: #ffffff;
+            margin-left: 5px;
+            opacity: 0.8;
+        }
+        .help-tooltip:hover {
+            opacity: 1;
+        }
+        .help-tooltip .tooltiptext {
+            visibility: hidden;
+            width: 260px;
+            background-color: #333;
+            color: #fff;
+            text-align: left;
+            border-radius: 6px;
+            padding: 8px;
+            position: absolute;
+            z-index: 1000;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -130px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.85rem;
+            line-height: 1.3;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        .help-tooltip .tooltiptext::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #333 transparent transparent transparent;
+        }
+        .help-tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+        .chat-help {
+            background: rgba(255,255,255,0.1);
+            padding: 0.5rem;
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
+            font-size: 0.85rem;
+        }
     </style>
     """, unsafe_allow_html=True)
     
-    # Header - ultra compact design
+    # Header - ultra compact design with help tooltip
     st.markdown("""
     <div style="background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); padding: 0.6rem; border-radius: 8px; margin-bottom: 0.3rem; color: white; text-align: center;">
-        <h2 style="margin: 0; padding: 0; font-size: 1.3rem;">💬 Psychological Chat Session</h2>
+        <h2 style="margin: 0; padding: 0; font-size: 1.3rem;">💬 Psychological Chat Session
+            <span class="help-tooltip">❓
+                <span class="tooltiptext">
+                    This is a safe space to explore your personality. Share your thoughts, experiences, reactions, and feelings. The AI will ask follow-up questions to understand your character patterns.
+                </span>
+            </span>
+        </h2>
         <p style="margin: 0.2rem 0 0 0; font-size: 0.85rem;">Explore your character through conversation</p>
+        <div class="chat-help">
+            💡 Tip: Be honest and specific about your experiences for better insights
+        </div>
     </div>
     """, unsafe_allow_html=True)
     
@@ -178,27 +240,57 @@ def main():
     with st.sidebar:
         st.markdown("### 💭 Conversation Tools")
         
-        if st.button("🔄 New Session", use_container_width=True):
-            st.session_state.messages = [
-                {
-                    "role": "assistant", 
-                    "content": "Hello! I'm your AI psychologist. What would you like to explore about your personality today?",
-                    "timestamp": datetime.now()
-                }
-            ]
-            st.rerun()
+        col1, col2 = st.columns([4, 1])
+        with col1:
+            if st.button("🔄 New Session", use_container_width=True):
+                st.session_state.messages = [
+                    {
+                        "role": "assistant", 
+                        "content": "Hello! I'm your AI psychologist. What would you like to explore about your personality today?",
+                        "timestamp": datetime.now()
+                    }
+                ]
+                st.rerun()
+        with col2:
+            st.markdown("❓", help="Start fresh conversation - your previous chat will be lost")
         
-        if st.button("📥 Save Conversation", use_container_width=True):
-            st.success("Conversation saved to your session history!")
+        col1, col2 = st.columns([4, 1])
+        with col1:
+            if st.button("📥 Save Conversation", use_container_width=True):
+                st.success("Conversation saved to your session history!")
+        with col2:
+            st.markdown("❓", help="Save this conversation to review later in your dashboard")
         
-        if st.button("📊 Analyze Session", use_container_width=True):
-            st.info("Analysis will be available after more conversation data is collected.")
+        col1, col2 = st.columns([4, 1])
+        with col1:
+            if st.button("📊 Analyze Session", use_container_width=True):
+                st.info("Analysis will be available after more conversation data is collected.")
+        with col2:
+            st.markdown("❓", help="Generate psychological insights based on this conversation")
         
         st.markdown("---")
         st.markdown("### 📈 Session Stats")
-        st.metric("Messages", len(st.session_state.messages))
-        st.metric("Session Time", "15 mins")
-        st.metric("Insights Detected", "3")
+        st.metric("Messages", len(st.session_state.messages), help="Total messages exchanged in this session")
+        st.metric("Session Time", "15 mins", help="Duration of current conversation")
+        st.metric("Insights Detected", "3", help="Number of personality insights identified")
+        
+        # Add conversation tips
+        st.markdown("---")
+        with st.expander("💡 Conversation Tips"):
+            st.markdown("""
+            **What to share:**
+            - Personal experiences and reactions
+            - How you handle stress or challenges
+            - Your preferences and decision-making style
+            - Relationships and social interactions
+            - Work or study approaches
+            
+            **Better responses:**
+            - "When I'm stressed, I usually..." ✅
+            - "I feel stressed" ❌
+            - "In conflicts, I tend to..." ✅
+            - "I don't like conflicts" ❌
+            """)
 
 if __name__ == "__main__":
     main()

@@ -182,17 +182,105 @@ def create_traits_breakdown():
 def main():
     """Main analysis dashboard"""
     
+    # Add help tooltip CSS
+    st.markdown("""
+    <style>
+        .help-tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: help;
+            color: #ffffff;
+            margin-left: 5px;
+            opacity: 0.9;
+        }
+        .help-tooltip:hover {
+            opacity: 1;
+        }
+        .help-tooltip .tooltiptext {
+            visibility: hidden;
+            width: 300px;
+            background-color: #333;
+            color: #fff;
+            text-align: left;
+            border-radius: 6px;
+            padding: 10px;
+            position: absolute;
+            z-index: 1000;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -150px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        .help-tooltip .tooltiptext::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #333 transparent transparent transparent;
+        }
+        .help-tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+        .analysis-help {
+            background: #e8f4fd;
+            border: 1px solid #2196F3;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+    </style>
+    """, unsafe_allow_html=True)
+    
     # Get user data
     character_type = get_primary_character_type()
     user_profile = get_mock_user_profile()
     
-    # Header
+    # Header with help tooltip
     st.markdown("""
     <div style="background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); padding: 1rem; border-radius: 10px; margin-bottom: 2rem; color: white; text-align: center;">
-        <h1>📊 Character Analysis Dashboard</h1>
+        <h1>📊 Character Analysis Dashboard 
+            <span class="help-tooltip">❓
+                <span class="tooltiptext">
+                    This dashboard shows your psychological profile based on conversations. Character types are determined by three factors: Emotionality (how strongly you react), Activity (your initiative level), and Resonance (present vs. future focus).
+                </span>
+            </span>
+        </h1>
         <p>Based on René Le Senne's Characterology Framework</p>
     </div>
     """, unsafe_allow_html=True)
+    
+    # User guidance for first-time users
+    if "analysis_visited" not in st.session_state:
+        st.session_state.analysis_visited = True
+        with st.expander("🎯 Understanding Your Analysis - Click to Learn More", expanded=True):
+            st.markdown("""
+            <div class="analysis-help">
+                <h4>📖 How to Read Your Analysis</h4>
+                <ul>
+                    <li><strong>Character Type:</strong> Your primary personality classification based on Le Senne's 8 types</li>
+                    <li><strong>Radar Chart:</strong> Visual representation of your 8 key personality dimensions</li>
+                    <li><strong>Confidence Score:</strong> How certain the AI is about your profile (higher = more data)</li>
+                    <li><strong>Strengths & Growth Areas:</strong> What you excel at vs areas for development</li>
+                    <li><strong>Evolution Timeline:</strong> How your profile has changed over time</li>
+                </ul>
+                
+                <h4>💡 Tips for Better Analysis</h4>
+                <ul>
+                    <li>Have more conversations in Chat to improve accuracy</li>
+                    <li>Share diverse experiences (work, relationships, challenges)</li>
+                    <li>Be specific about your reactions and decision-making processes</li>
+                    <li>Review this page regularly to track changes</li>
+                </ul>
+            </div>
+            """, unsafe_allow_html=True)
     
     # Character Type Summary
     st.markdown(f"""
@@ -265,14 +353,26 @@ def main():
     with st.sidebar:
         st.markdown("### 🛠️ Analysis Tools")
         
-        if st.button("🔄 Refresh Analysis", use_container_width=True):
-            st.success("Analysis refreshed with latest session data!")
+        col1, col2 = st.columns([4, 1])
+        with col1:
+            if st.button("🔄 Refresh Analysis", use_container_width=True):
+                st.success("Analysis refreshed with latest session data!")
+        with col2:
+            st.markdown("❓", help="Update analysis with latest chat conversations and responses")
         
-        if st.button("📊 Detailed Report", use_container_width=True):
-            st.info("Navigate to Reports page to generate detailed analysis.")
+        col1, col2 = st.columns([4, 1])
+        with col1:
+            if st.button("📊 Detailed Report", use_container_width=True):
+                st.info("Navigate to Reports page to generate detailed analysis.")
+        with col2:
+            st.markdown("❓", help="Generate comprehensive PDF report of your psychological analysis")
         
-        if st.button("💾 Export Data", use_container_width=True):
-            st.success("Analysis data exported successfully!")
+        col1, col2 = st.columns([4, 1])
+        with col1:
+            if st.button("💾 Export Data", use_container_width=True):
+                st.success("Analysis data exported successfully!")
+        with col2:
+            st.markdown("❓", help="Download your analysis data in CSV format for personal use")
         
         st.markdown("---")
         st.markdown("### ⏰ Analysis History")
@@ -281,17 +381,38 @@ def main():
         st.markdown("- **Last Week**: Major personality shift detected")
         
         st.markdown("---")
-        st.markdown("### 📚 Le Senne's Framework")
-        st.markdown("**Three Primary Factors:**")
-        st.markdown("- **E**motionality (E/nE)")
-        st.markdown("- **A**ctivity (A/nA)")  
-        st.markdown("- **R**esonance (P/S)")
-        st.markdown("**8 Character Types:**")
-        st.markdown("- Nervous (EnAP)")
-        st.markdown("- Sanguine (EAP)")
-        st.markdown("- Choleric (EAS)")
-        st.markdown("- Melancholic (EnAS)")
-        st.markdown("- And 4 more...")
+        with st.expander("📚 Le Senne's Framework Guide"):
+            st.markdown("""
+            **Three Primary Factors:**
+            - **E**motionality (E/nE) - How strongly you react
+            - **A**ctivity (A/nA) - Your tendency to act
+            - **R**esonance (P/S) - Present vs future focus
+            
+            **8 Character Types:**
+            - **Nervous** (EnAP) - Emotional, inactive, present-focused
+            - **Sanguine** (EAP) - Emotional, active, present-focused  
+            - **Choleric** (EAS) - Emotional, active, future-focused
+            - **Melancholic** (EnAS) - Emotional, inactive, future-focused
+            - **Phlegmatic** (nEnAS) - Calm, inactive, future-focused
+            - **Apathetic** (nEnAP) - Calm, inactive, present-focused
+            - **Amorphous** (nEAP) - Calm, active, present-focused
+            - **Passionate** (nEAS) - Calm, active, future-focused
+            """)
+        
+        with st.expander("💡 Interpretation Tips"):
+            st.markdown("""
+            **Understanding Your Scores:**
+            - **70-100%**: Strong trait presence
+            - **50-69%**: Moderate trait presence  
+            - **30-49%**: Weak trait presence
+            - **0-29%**: Trait largely absent
+            
+            **Radar Chart Reading:**
+            - Larger area = more complex personality
+            - Balanced shape = well-rounded character
+            - Spikes = dominant traits
+            - Valleys = areas for development
+            """)
 
 if __name__ == "__main__":
     main()
