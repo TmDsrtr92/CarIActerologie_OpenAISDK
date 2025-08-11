@@ -20,7 +20,7 @@ from data.mock_data import (
 )
 
 st.set_page_config(
-    page_title="Analysis - CarIActerology",
+    page_title="Analyse - CarIActérologie",
     page_icon="📊",
     layout="wide"
 )
@@ -35,14 +35,14 @@ def create_character_radar_chart():
     # Convert Le Senne traits to 0-100 scale for visualization
     base_traits = character_type["traits"]
     traits = {
-        'Emotionality': base_traits["emotionality"] * 10,
-        'Activity': base_traits["activity"] * 10, 
-        'Resonance': base_traits["resonance"] * 10,
+        'Émotivité': base_traits["emotionality"] * 10,
+        'Activité': base_traits["activity"] * 10, 
+        'Résonance': base_traits["resonance"] * 10,
         'Extraversion': (base_traits["activity"] + base_traits["emotionality"]) * 5,
         'Intuition': (10 - base_traits["resonance"]) * 10,
-        'Rationality': (10 - base_traits["emotionality"]) * 10,
-        'Stability': base_traits["resonance"] * 10,
-        'Openness': (base_traits["emotionality"] + (10 - base_traits["resonance"])) * 5
+        'Rationalité': (10 - base_traits["emotionality"]) * 10,
+        'Stabilité': base_traits["resonance"] * 10,
+        'Ouverture': (base_traits["emotionality"] + (10 - base_traits["resonance"])) * 5
     }
     
     categories = list(traits.keys())
@@ -100,8 +100,8 @@ def create_character_type_display():
     # Sort by score
     sorted_types = sorted(character_types.items(), key=lambda x: x[1]["score"], reverse=True)
     
-    st.markdown("### 🎭 Character Type Analysis")
-    st.markdown("Based on René Le Senne's characterology framework")
+    st.markdown("### 🎭 Analyse du Type de Caractère")
+    st.markdown("Basée sur le cadre caractérologique de René Le Senne")
     
     col1, col2, col3 = st.columns([2, 1, 2])
     
@@ -110,21 +110,21 @@ def create_character_type_display():
         top_type, top_data = sorted_types[0]
         st.markdown(f"""
         <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 2rem; border-radius: 15px; text-align: center; margin-bottom: 1rem;">
-            <h2>Primary Type: {top_type}</h2>
+            <h2>Type Primaire : {top_type}</h2>
             <p style="font-size: 1.2rem; margin: 0;">{top_data['description']}</p>
             <div style="font-size: 2rem; margin-top: 1rem;">
-                Confidence: {top_data['score']}%
+                Confiance : {top_data['score']}%
             </div>
         </div>
         """, unsafe_allow_html=True)
     
     with col2:
-        st.markdown("### 📈 Confidence")
+        st.markdown("### 📈 Confiance")
         for char_type, data in sorted_types[:3]:
             st.metric(
                 label=char_type, 
                 value=f"{data['score']}%",
-                delta=f"{data['score'] - 50}% vs baseline"
+                delta=f"{data['score'] - 50}% vs référence"
             )
     
     with col3:
@@ -135,8 +135,8 @@ def create_character_type_display():
         fig = px.line(
             x=dates, 
             y=scores,
-            title="Character Profile Evolution",
-            labels={'x': 'Date', 'y': 'Confidence Score'}
+            title="Évolution du Profil de Caractère",
+            labels={'x': 'Date', 'y': 'Score de Confiance'}
         )
         fig.update_traces(line_color='#667eea')
         st.plotly_chart(fig, use_container_width=True)
@@ -144,18 +144,18 @@ def create_character_type_display():
 def create_traits_breakdown():
     """Create detailed traits breakdown"""
     
-    st.markdown("### 🔍 Detailed Trait Analysis")
+    st.markdown("### 🔍 Analyse Détaillée des Traits")
     
     traits_data = {
-        'Trait': ['Emotionality', 'Activity', 'Resonance', 'Extraversion', 'Intuition', 'Rationality'],
+        'Trait': ['Émotivité', 'Activité', 'Résonance', 'Extraversion', 'Intuition', 'Rationalité'],
         'Score': [75, 60, 80, 65, 70, 55],
         'Interpretation': [
-            'High emotional responsiveness to stimuli',
-            'Moderate tendency toward action and initiative',
-            'Strong primary resonance - immediate reactions',
-            'Balanced social orientation',
-            'Strong intuitive thinking patterns',
-            'Moderate logical reasoning preference'
+            'Forte réactivité émotionnelle aux stimuli',
+            'Tendance modérée vers l\'action et l\'initiative',
+            'Résonance primaire forte - réactions immédiates',
+            'Orientation sociale équilibrée',
+            'Patterns de pensée intuitive forte',
+            'Préférence modérée pour le raisonnement logique'
         ]
     }
     
@@ -246,38 +246,38 @@ def main():
     # Header with help tooltip
     st.markdown("""
     <div style="background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); padding: 1rem; border-radius: 10px; margin-bottom: 2rem; color: white; text-align: center;">
-        <h1>📊 Character Analysis Dashboard 
+        <h1>📊 Tableau de Bord d'Analyse du Caractère 
             <span class="help-tooltip">❓
                 <span class="tooltiptext">
-                    This dashboard shows your psychological profile based on conversations. Character types are determined by three factors: Emotionality (how strongly you react), Activity (your initiative level), and Resonance (present vs. future focus).
+                    Ce tableau de bord montre votre profil psychologique basé sur vos conversations. Les types de caractère sont déterminés par trois facteurs : Émotivité (intensité de vos réactions), Activité (votre niveau d'initiative), et Résonance (focus présent vs futur).
                 </span>
             </span>
         </h1>
-        <p>Based on René Le Senne's Characterology Framework</p>
+        <p>Basé sur le Cadre Caractérologique de René Le Senne</p>
     </div>
     """, unsafe_allow_html=True)
     
     # User guidance for first-time users
     if "analysis_visited" not in st.session_state:
         st.session_state.analysis_visited = True
-        with st.expander("🎯 Understanding Your Analysis - Click to Learn More", expanded=True):
+        with st.expander("🎯 Comprendre Votre Analyse - Cliquez pour En Savoir Plus", expanded=True):
             st.markdown("""
             <div class="analysis-help">
-                <h4>📖 How to Read Your Analysis</h4>
+                <h4>📖 Comment Lire Votre Analyse</h4>
                 <ul>
-                    <li><strong>Character Type:</strong> Your primary personality classification based on Le Senne's 8 types</li>
-                    <li><strong>Radar Chart:</strong> Visual representation of your 8 key personality dimensions</li>
-                    <li><strong>Confidence Score:</strong> How certain the AI is about your profile (higher = more data)</li>
-                    <li><strong>Strengths & Growth Areas:</strong> What you excel at vs areas for development</li>
-                    <li><strong>Evolution Timeline:</strong> How your profile has changed over time</li>
+                    <li><strong>Type de Caractère :</strong> Votre classification de personnalité principale basée sur les 8 types de Le Senne</li>
+                    <li><strong>Graphique Radar :</strong> Représentation visuelle de vos 8 dimensions clés de personnalité</li>
+                    <li><strong>Score de Confiance :</strong> À quel point l'IA est certaine de votre profil (plus haut = plus de données)</li>
+                    <li><strong>Forces et Zones de Croissance :</strong> Ce en quoi vous excellez vs les domaines à développer</li>
+                    <li><strong>Chronologie d'Évolution :</strong> Comment votre profil a changé au fil du temps</li>
                 </ul>
                 
-                <h4>💡 Tips for Better Analysis</h4>
+                <h4>💡 Conseils pour une Meilleure Analyse</h4>
                 <ul>
-                    <li>Have more conversations in Chat to improve accuracy</li>
-                    <li>Share diverse experiences (work, relationships, challenges)</li>
-                    <li>Be specific about your reactions and decision-making processes</li>
-                    <li>Review this page regularly to track changes</li>
+                    <li>Ayez plus de conversations dans Discussion pour améliorer la précision</li>
+                    <li>Partagez des expériences diverses (travail, relations, défis)</li>
+                    <li>Soyez spécifique sur vos réactions et processus de prise de décision</li>
+                    <li>Consultez cette page régulièrement pour suivre les changements</li>
                 </ul>
             </div>
             """, unsafe_allow_html=True)
@@ -285,8 +285,8 @@ def main():
     # Character Type Summary
     st.markdown(f"""
     <div style="background: {character_type['color']}20; border-left: 4px solid {character_type['color']}; padding: 1rem; border-radius: 5px; margin-bottom: 2rem;">
-        <h2 style="color: {character_type['color']}; margin: 0;">🎭 Your Character Type: {character_type['name']}</h2>
-        <p style="margin: 0.5rem 0;"><strong>Confidence Score:</strong> {user_profile['confidence_score']*100:.1f}%</p>
+        <h2 style="color: {character_type['color']}; margin: 0;">🎭 Votre Type de Caractère : {character_type['name']}</h2>
+        <p style="margin: 0.5rem 0;"><strong>Score de Confiance :</strong> {user_profile['confidence_score']*100:.1f}%</p>
         <p style="margin: 0;">{character_type['description']}</p>
     </div>
     """, unsafe_allow_html=True)
@@ -301,23 +301,23 @@ def main():
     
     with col2:
         # Current analysis summary using real data
-        st.markdown("### 📋 Analysis Summary")
+        st.markdown("### 📋 Résumé d'Analyse")
         
-        st.metric("Sessions Analyzed", f"{user_profile['analysis_sessions']}", "+3")
-        st.metric("Character Confidence", f"{user_profile['confidence_score']*100:.0f}%", "+5%")
-        st.metric("Total Interactions", f"{user_profile['total_interactions']}", "+12")
+        st.metric("Sessions Analysées", f"{user_profile['analysis_sessions']}", "+3")
+        st.metric("Confiance de Caractère", f"{user_profile['confidence_score']*100:.0f}%", "+5%")
+        st.metric("Interactions Totales", f"{user_profile['total_interactions']}", "+12")
         
-        st.markdown("### 💪 Key Strengths")
+        st.markdown("### 💪 Forces Clés")
         for strength in character_type["strengths"][:3]:
             st.success(f"✓ {strength}")
         
-        st.markdown("### ⚠️ Growth Areas") 
+        st.markdown("### ⚠️ Zones de Croissance") 
         for challenge in character_type["challenges"][:2]:
             st.warning(f"• {challenge}")
     
     # Character evolution timeline
     st.markdown("---")
-    st.markdown("## 📈 Character Development Over Time")
+    st.markdown("## 📈 Développement du Caractère au Fil du Temps")
     
     evolution_data = get_character_evolution_data(6)
     
@@ -333,9 +333,9 @@ def main():
         evolution_fig.add_trace(go.Scatter(x=dates, y=resonance, name='Resonance', line=dict(color='#45B7D1', width=3)))
         
         evolution_fig.update_layout(
-            title="Character Trait Evolution - Le Senne Framework",
-            xaxis_title="Time Period", 
-            yaxis_title="Trait Strength (0-100)",
+            title="Évolution des Traits de Caractère - Cadre Le Senne",
+            xaxis_title="Période de Temps", 
+            yaxis_title="Force du Trait (0-100)",
             height=400,
             showlegend=True,
             hovermode='x unified'
@@ -351,19 +351,19 @@ def main():
     
     # Sidebar with analysis tools
     with st.sidebar:
-        st.markdown("### 🛠️ Analysis Tools")
+        st.markdown("### 🛠️ Outils d'Analyse")
         
         col1, col2 = st.columns([4, 1])
         with col1:
-            if st.button("🔄 Refresh Analysis", use_container_width=True):
-                st.success("Analysis refreshed with latest session data!")
+            if st.button("🔄 Actualiser l'Analyse", use_container_width=True):
+                st.success("Analyse actualisée avec les dernières données de session !")
         with col2:
-            st.markdown("❓", help="Update analysis with latest chat conversations and responses")
+            st.markdown("❓", help="Mettre à jour l'analyse avec les dernières conversations et réponses")
         
         col1, col2 = st.columns([4, 1])
         with col1:
-            if st.button("📊 Detailed Report", use_container_width=True):
-                st.info("Navigate to Reports page to generate detailed analysis.")
+            if st.button("📊 Rapport Détaillé", use_container_width=True):
+                st.info("Naviguez vers la page Rapports pour générer une analyse détaillée.")
         with col2:
             st.markdown("❓", help="Generate comprehensive PDF report of your psychological analysis")
         

@@ -10,7 +10,7 @@ from pathlib import Path
 
 # Configure page
 st.set_page_config(
-    page_title="Home - CarIActerology",
+    page_title="Accueil - CarIActérologie",
     page_icon="🧠",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -105,18 +105,18 @@ def main():
     # Main header
     st.markdown("""
     <div class="main-header">
-        <h1>🧠 CarIActerology</h1>
-        <p><em>"Know Thyself" - Socrates</em></p>
-        <p>AI-Powered Psychological Self-Discovery Platform</p>
+        <h1>🧠 CarIActérologie</h1>
+        <p><em>"Connais-toi toi-même" - Socrate</em></p>
+        <p>Plateforme de Découverte de Soi Psychologique propulsée par l'IA</p>
     </div>
     """, unsafe_allow_html=True)
     
     # Welcome message
     st.markdown("""
     <div class="welcome-text">
-        Welcome to CarIActerology, an advanced psychological self-discovery platform powered by artificial intelligence.
+        Bienvenue sur CarIActérologie, une plateforme avancée de découverte de soi psychologique alimentée par l'intelligence artificielle.
         <br>
-        Based on René Le Senne's characterology, we help you understand your personality through meaningful conversations.
+        Basée sur la caractérologie de René Le Senne, nous vous aidons à comprendre votre personnalité grâce à des conversations significatives.
     </div>
     """, unsafe_allow_html=True)
     
@@ -126,49 +126,49 @@ def main():
     with col1:
         st.markdown("""
         <div class="navigation-card">
-            <h3>💬 Chat 
+            <h3>💬 Discussion 
                 <span class="help-tooltip">❓
                     <span class="tooltiptext">
-                        Engage in meaningful conversations with our AI psychologist. Share your thoughts, experiences, and questions to uncover insights about your personality based on Le Senne's characterology framework.
+                        Engagez des conversations significatives avec notre psychologue IA. Partagez vos pensées, expériences et questions pour découvrir des insights sur votre personnalité basés sur le cadre caractérologique de Le Senne.
                     </span>
                 </span>
             </h3>
-            <p>Start a conversation with our AI psychologist to explore your personality and character traits.</p>
+            <p>Commencez une conversation avec notre psychologue IA pour explorer votre personnalité et vos traits de caractère.</p>
         </div>
         """, unsafe_allow_html=True)
-        if st.button("Start Chat", key="chat_btn", use_container_width=True):
+        if st.button("Commencer la Discussion", key="chat_btn", use_container_width=True):
             st.switch_page("pages/1_Chat.py")
     
     with col2:
         st.markdown("""
         <div class="navigation-card">
-            <h3>📊 Analysis 
+            <h3>📊 Analyse 
                 <span class="help-tooltip">❓
                     <span class="tooltiptext">
-                        View detailed visualizations of your personality profile including character type assessment, trait breakdowns, and confidence scores based on your conversations and responses.
+                        Visualisez des représentations détaillées de votre profil de personnalité incluant l'évaluation du type de caractère, les analyses des traits, et les scores de confiance basés sur vos conversations et réponses.
                     </span>
                 </span>
             </h3>
-            <p>View your psychological profile and character analysis based on Le Senne's characterology.</p>
+            <p>Visualisez votre profil psychologique et l'analyse de caractère basée sur la caractérologie de Le Senne.</p>
         </div>
         """, unsafe_allow_html=True)
-        if st.button("View Analysis", key="analysis_btn", use_container_width=True):
+        if st.button("Voir l'Analyse", key="analysis_btn", use_container_width=True):
             st.switch_page("pages/2_Analysis.py")
     
     with col3:
         st.markdown("""
         <div class="navigation-card">
-            <h3>📈 Dashboard 
+            <h3>📈 Tableau de Bord 
                 <span class="help-tooltip">❓
                     <span class="tooltiptext">
-                        Monitor your self-discovery journey with progress tracking, session statistics, timeline visualizations, and personal insights collected over time.
+                        Surveillez votre parcours de découverte de soi avec le suivi des progrès, les statistiques de sessions, les visualisations de chronologie, et les insights personnels collectés au fil du temps.
                     </span>
                 </span>
             </h3>
-            <p>Track your self-discovery progress and view insights from your sessions.</p>
+            <p>Suivez vos progrès de découverte de soi et visualisez les insights de vos sessions.</p>
         </div>
         """, unsafe_allow_html=True)
-        if st.button("Open Dashboard", key="dashboard_btn", use_container_width=True):
+        if st.button("Ouvrir le Tableau de Bord", key="dashboard_btn", use_container_width=True):
             st.switch_page("pages/3_Dashboard.py")
     
     # Second row
@@ -177,59 +177,59 @@ def main():
     with col4:
         st.markdown("""
         <div class="navigation-card">
-            <h3>📄 Reports 
+            <h3>📄 Rapports 
                 <span class="help-tooltip">❓
                     <span class="tooltiptext">
-                        Create comprehensive PDF reports including psychological analysis, character profiles, session summaries, and progress reports for personal use or sharing with professionals.
+                        Créez des rapports PDF complets incluant l'analyse psychologique, les profils de caractère, les résumés de sessions, et les rapports de progrès pour un usage personnel ou à partager avec des professionnels.
                     </span>
                 </span>
             </h3>
-            <p>Generate and download detailed psychological reports of your sessions.</p>
+            <p>Générez et téléchargez des rapports psychologiques détaillés de vos sessions.</p>
         </div>
         """, unsafe_allow_html=True)
-        if st.button("Generate Reports", key="reports_btn", use_container_width=True):
+        if st.button("Générer des Rapports", key="reports_btn", use_container_width=True):
             st.switch_page("pages/4_Reports.py")
     
     with col5:
         st.markdown("""
         <div class="navigation-card">
-            <h3>⚙️ Settings 
+            <h3>⚙️ Paramètres 
                 <span class="help-tooltip">❓
                     <span class="tooltiptext">
-                        Customize your experience with user preferences, privacy controls, data management options, theme settings, and account information management.
+                        Personnalisez votre expérience avec les préférences utilisateur, les contrôles de confidentialité, les options de gestion des données, les paramètres de thème, et la gestion des informations de compte.
                     </span>
                 </span>
             </h3>
-            <p>Manage your preferences, privacy settings, and account information.</p>
+            <p>Gérez vos préférences, paramètres de confidentialité, et informations de compte.</p>
         </div>
         """, unsafe_allow_html=True)
-        if st.button("Open Settings", key="settings_btn", use_container_width=True):
+        if st.button("Ouvrir les Paramètres", key="settings_btn", use_container_width=True):
             st.switch_page("pages/5_Settings.py")
     
     # Help Section
     st.markdown("---")
-    with st.expander("❓ How to Get Started - First-Time User Guide"):
+    with st.expander("❓ Comment Commencer - Guide du Premier Utilisateur"):
         st.markdown("""
         <div class="help-section">
-            <h4>🚀 Quick Start Guide</h4>
+            <h4>🚀 Guide de Démarrage Rapide</h4>
             <ol>
-                <li><strong>Start with Chat:</strong> Begin your journey by clicking "Start Chat" and having a conversation about yourself</li>
-                <li><strong>Share Openly:</strong> The more you share about your thoughts, feelings, and experiences, the better the analysis</li>
-                <li><strong>Review Analysis:</strong> After chatting, visit the Analysis page to see your personality profile</li>
-                <li><strong>Track Progress:</strong> Use the Dashboard to monitor your self-discovery journey over time</li>
-                <li><strong>Generate Reports:</strong> Create detailed PDF reports of your psychological insights</li>
+                <li><strong>Commencez par la Discussion :</strong> Débutez votre parcours en cliquant sur "Commencer la Discussion" et ayez une conversation sur vous-même</li>
+                <li><strong>Partagez Ouvertement :</strong> Plus vous partagez vos pensées, sentiments et expériences, meilleure sera l'analyse</li>
+                <li><strong>Consultez l'Analyse :</strong> Après avoir discuté, visitez la page Analyse pour voir votre profil de personnalité</li>
+                <li><strong>Suivez vos Progrès :</strong> Utilisez le Tableau de Bord pour surveiller votre parcours de découverte de soi au fil du temps</li>
+                <li><strong>Générez des Rapports :</strong> Créez des rapports PDF détaillés de vos insights psychologiques</li>
             </ol>
             
-            <h4>💡 Understanding Characterology</h4>
-            <p>René Le Senne's characterology identifies 8 personality types based on three key factors:</p>
+            <h4>💡 Comprendre la Caractérologie</h4>
+            <p>La caractérologie de René Le Senne identifie 8 types de personnalité basés sur trois facteurs clés :</p>
             <ul>
-                <li><strong>Emotionality:</strong> How strongly you react to situations</li>
-                <li><strong>Activity:</strong> Your tendency to act and take initiative</li>
-                <li><strong>Resonance:</strong> Whether you focus on present details or future possibilities</li>
+                <li><strong>Émotivité :</strong> L'intensité de vos réactions aux situations</li>
+                <li><strong>Activité :</strong> Votre tendance à agir et prendre des initiatives</li>
+                <li><strong>Résonance :</strong> Si vous vous concentrez sur les détails présents ou les possibilités futures</li>
             </ul>
             
-            <h4>🔒 Privacy & Data</h4>
-            <p>Your conversations are processed to provide insights but stored securely. Visit Settings to manage your privacy preferences and data retention options.</p>
+            <h4>🔒 Confidentialité et Données</h4>
+            <p>Vos conversations sont traitées pour fournir des insights mais stockées de manière sécurisée. Visitez les Paramètres pour gérer vos préférences de confidentialité et options de rétention des données.</p>
         </div>
         """, unsafe_allow_html=True)
     
@@ -237,8 +237,8 @@ def main():
     st.markdown("---")
     st.markdown("""
     <div style="text-align: center; color: #888; margin-top: 2rem;">
-        <p>Based on René Le Senne's <em>Treatise on Characterology</em> (1945)</p>
-        <p>Powered by OpenAI Agents SDK, Mem0 Memory System, and FAISS Vector Database</p>
+        <p>Basé sur le <em>Traité de Caractérologie</em> de René Le Senne (1945)</p>
+        <p>Propulsé par OpenAI Agents SDK, Système de Mémoire Mem0, et Base de Données Vectorielle FAISS</p>
     </div>
     """, unsafe_allow_html=True)
 

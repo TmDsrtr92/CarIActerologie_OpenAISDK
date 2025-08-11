@@ -8,7 +8,7 @@ import time
 from datetime import datetime
 
 st.set_page_config(
-    page_title="Chat - CarIActerology",
+    page_title="Discussion - CarIActérologie",
     page_icon="💬",
     layout="wide"
 )
@@ -19,7 +19,7 @@ def initialize_session_state():
         st.session_state.messages = [
             {
                 "role": "assistant", 
-                "content": "Hello! I'm your AI psychologist, specialized in René Le Senne's characterology. I'm here to help you discover yourself through meaningful conversation. What would you like to explore about your personality today?",
+                "content": "Bonjour ! Je suis votre psychologue IA, spécialisé dans la caractérologie de René Le Senne. Je suis ici pour vous aider à vous découvrir à travers des conversations significatives. Qu'aimeriez-vous explorer concernant votre personnalité aujourd'hui ?",
                 "timestamp": datetime.now()
             }
         ]
@@ -50,15 +50,15 @@ def display_message(message, is_user=False):
 def generate_mock_response(user_message):
     """Generate a mock psychological response"""
     mock_responses = [
-        "That's a fascinating perspective. In characterology, we often see that such thoughts reflect deeper personality patterns. Can you tell me more about when you first noticed this about yourself?",
+        "C'est une perspective fascinante. En caractérologie, nous voyons souvent que de telles pensées reflètent des patterns de personnalité plus profonds. Pouvez-vous me parler davantage du moment où vous avez remarqué cela pour la première fois chez vous ?",
         
-        "I notice some interesting character traits emerging from what you've shared. According to Le Senne's framework, this could indicate certain emotional and activity patterns. How do you typically react in challenging situations?",
+        "Je remarque des traits de caractère intéressants qui émergent de ce que vous avez partagé. Selon le cadre de Le Senne, cela pourrait indiquer certains patterns émotionnels et d'activité. Comment réagissez-vous généralement dans des situations difficiles ?",
         
-        "Your response suggests some intriguing aspects of your character structure. In characterology, we analyze three main factors: Emotionality, Activity, and Resonance. Which of these resonates most with your self-perception?",
+        "Votre réponse suggère des aspects intrigants de votre structure de caractère. En caractérologie, nous analysons trois facteurs principaux : l'Émotivité, l'Activité et la Résonance. Lequel de ces facteurs résonne le plus avec votre auto-perception ?",
         
-        "This is very insightful. I'm beginning to see patterns that might align with one of the eight character types in Le Senne's system. Do you find yourself more drawn to concrete details or abstract concepts?",
+        "C'est très perspicace. Je commence à voir des patterns qui pourraient s'aligner avec l'un des huit types de caractère du système de Le Senne. Vous sentez-vous plus attiré par les détails concrets ou les concepts abstraits ?",
         
-        "Thank you for sharing that. Your openness suggests a willingness to explore your inner world. In my analysis, I'm noticing potential indicators of specific character traits. How would you describe your energy levels throughout the day?"
+        "Merci de partager cela. Votre ouverture suggère une volonté d'explorer votre monde intérieur. Dans mon analyse, je remarque des indicateurs potentiels de traits de caractère spécifiques. Comment décririez-vous vos niveaux d'énergie tout au long de la journée ?"
     ]
     
     import random
@@ -169,16 +169,16 @@ def main():
     # Header - ultra compact design with help tooltip
     st.markdown("""
     <div style="background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); padding: 0.6rem; border-radius: 8px; margin-bottom: 0.3rem; color: white; text-align: center;">
-        <h2 style="margin: 0; padding: 0; font-size: 1.3rem;">💬 Psychological Chat Session
+        <h2 style="margin: 0; padding: 0; font-size: 1.3rem;">💬 Session de Discussion Psychologique
             <span class="help-tooltip">❓
                 <span class="tooltiptext">
-                    This is a safe space to explore your personality. Share your thoughts, experiences, reactions, and feelings. The AI will ask follow-up questions to understand your character patterns.
+                    Ceci est un espace sûr pour explorer votre personnalité. Partagez vos pensées, expériences, réactions et sentiments. L'IA posera des questions de suivi pour comprendre vos patterns de caractère.
                 </span>
             </span>
         </h2>
-        <p style="margin: 0.2rem 0 0 0; font-size: 0.85rem;">Explore your character through conversation</p>
+        <p style="margin: 0.2rem 0 0 0; font-size: 0.85rem;">Explorez votre caractère à travers la conversation</p>
         <div class="chat-help">
-            💡 Tip: Be honest and specific about your experiences for better insights
+            💡 Conseil : Soyez honnête et spécifique sur vos expériences pour de meilleurs insights
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -201,13 +201,13 @@ def main():
                 st.markdown("""
                 <div style="display: flex; justify-content: flex-start; margin: 1rem 0;">
                     <div style="background: #f1f3f4; color: #888; padding: 1rem; border-radius: 18px; font-style: italic;">
-                        AI is thinking...
+                        L'IA réfléchit...
                     </div>
                 </div>
                 """, unsafe_allow_html=True)
         
         # Chat input - positioned directly below the messages
-        user_input = st.chat_input("Share your thoughts, feelings, or ask about your personality...")
+        user_input = st.chat_input("Partagez vos pensées, sentiments, ou posez des questions sur votre personnalité...")
         
         if user_input:
             # Add user message
@@ -238,58 +238,58 @@ def main():
     
     # Sidebar with conversation tools
     with st.sidebar:
-        st.markdown("### 💭 Conversation Tools")
+        st.markdown("### 💭 Outils de Conversation")
         
         col1, col2 = st.columns([4, 1])
         with col1:
-            if st.button("🔄 New Session", use_container_width=True):
+            if st.button("🔄 Nouvelle Session", use_container_width=True):
                 st.session_state.messages = [
                     {
                         "role": "assistant", 
-                        "content": "Hello! I'm your AI psychologist. What would you like to explore about your personality today?",
+                        "content": "Bonjour ! Je suis votre psychologue IA. Qu'aimeriez-vous explorer concernant votre personnalité aujourd'hui ?",
                         "timestamp": datetime.now()
                     }
                 ]
                 st.rerun()
         with col2:
-            st.markdown("❓", help="Start fresh conversation - your previous chat will be lost")
+            st.markdown("❓", help="Commencer une nouvelle conversation - votre discussion précédente sera perdue")
         
         col1, col2 = st.columns([4, 1])
         with col1:
-            if st.button("📥 Save Conversation", use_container_width=True):
-                st.success("Conversation saved to your session history!")
+            if st.button("📥 Sauvegarder la Conversation", use_container_width=True):
+                st.success("Conversation sauvegardée dans votre historique de session !")
         with col2:
-            st.markdown("❓", help="Save this conversation to review later in your dashboard")
+            st.markdown("❓", help="Sauvegarder cette conversation pour la revoir plus tard dans votre tableau de bord")
         
         col1, col2 = st.columns([4, 1])
         with col1:
-            if st.button("📊 Analyze Session", use_container_width=True):
-                st.info("Analysis will be available after more conversation data is collected.")
+            if st.button("📊 Analyser la Session", use_container_width=True):
+                st.info("L'analyse sera disponible après avoir collecté plus de données de conversation.")
         with col2:
-            st.markdown("❓", help="Generate psychological insights based on this conversation")
+            st.markdown("❓", help="Générer des insights psychologiques basés sur cette conversation")
         
         st.markdown("---")
-        st.markdown("### 📈 Session Stats")
-        st.metric("Messages", len(st.session_state.messages), help="Total messages exchanged in this session")
-        st.metric("Session Time", "15 mins", help="Duration of current conversation")
-        st.metric("Insights Detected", "3", help="Number of personality insights identified")
+        st.markdown("### 📈 Statistiques de Session")
+        st.metric("Messages", len(st.session_state.messages), help="Total des messages échangés dans cette session")
+        st.metric("Durée de Session", "15 mins", help="Durée de la conversation actuelle")
+        st.metric("Insights Détectés", "3", help="Nombre d'insights de personnalité identifiés")
         
         # Add conversation tips
         st.markdown("---")
-        with st.expander("💡 Conversation Tips"):
+        with st.expander("💡 Conseils de Conversation"):
             st.markdown("""
-            **What to share:**
-            - Personal experiences and reactions
-            - How you handle stress or challenges
-            - Your preferences and decision-making style
-            - Relationships and social interactions
-            - Work or study approaches
+            **Quoi partager :**
+            - Expériences personnelles et réactions
+            - Comment vous gérez le stress ou les défis
+            - Vos préférences et style de prise de décision
+            - Relations et interactions sociales
+            - Approches de travail ou d'étude
             
-            **Better responses:**
-            - "When I'm stressed, I usually..." ✅
-            - "I feel stressed" ❌
-            - "In conflicts, I tend to..." ✅
-            - "I don't like conflicts" ❌
+            **Meilleures réponses :**
+            - "Quand je suis stressé(e), j'ai tendance à..." ✅
+            - "Je me sens stressé(e)" ❌
+            - "Dans les conflits, j'ai tendance à..." ✅
+            - "Je n'aime pas les conflits" ❌
             """)
 
 if __name__ == "__main__":

@@ -177,6 +177,113 @@ class CharacterologyKnowledgeBase:
         elif filename == "character_type_schemas":
             chunks, metadata = self._process_schemas(data, filename)
         
+        # Add comprehensive text extraction for any missed content
+        additional_chunks, additional_metadata = self._extract_all_text_content(data, filename)
+        chunks.extend(additional_chunks)
+        metadata.extend(additional_metadata)
+        
+        return chunks, metadata
+    
+    def _extract_all_text_content(self, data: Dict, source: str, path: str = "", parent_context: str = "") -> Tuple[List[str], List[Dict]]:
+        """
+        Recursively extract all meaningful text content from JSON data.
+        
+        Args:
+            data: JSON data structure
+            source: Source file name
+            path: Current path in the JSON structure
+            parent_context: Context from parent levels
+            
+        Returns:
+            Tuple of (text_chunks, metadata_list)
+        """
+        chunks = []
+        metadata = []
+        
+        if isinstance(data, dict):
+            for key, value in data.items():
+                current_path = f"{path}.{key}" if path else key
+                
+                # Skip already processed top-level sections
+                if path == "" and key in ["framework", "character_types"] and source == "characterology_knowledge_base":
+                    continue
+                if path == "" and key in ["berger_contributions", "judet_contributions"] and source == "berger_judet_extensions":
+                    continue
+                if path == "" and key in ["primary_dimensions"] and source == "psychological_traits_taxonomy":
+                    continue
+                if path == "" and key in ["validation_rules"] and source == "character_type_schemas":
+                    continue
+                
+                if isinstance(value, str) and len(value.strip()) > 30:  # Meaningful text
+                    # Create context-aware chunk
+                    chunk_text = f"{parent_context}\n" if parent_context else ""
+                    chunk_text += f"{key.replace('_', ' ').title()}: {value}"
+                    
+                    chunks.append(chunk_text)
+                    metadata.append({
+                        'source': source,
+                        'type': 'text_content',
+                        'path': current_path,
+                        'field': key,
+                        'category': 'detailed_content'
+                    })
+                elif isinstance(value, list) and value:
+                    # Process lists of text content
+                    if all(isinstance(item, str) for item in value):
+                        chunk_text = f"{parent_context}\n" if parent_context else ""
+                        chunk_text += f"{key.replace('_', ' ').title()}:\n"
+                        for item in value:
+                            if len(item.strip()) > 10:
+                                chunk_text += f"- {item}\n"
+                        
+                        if len(chunk_text.strip()) > 50:
+                            chunks.append(chunk_text.strip())
+                            metadata.append({
+                                'source': source,
+                                'type': 'list_content',
+                                'path': current_path,
+                                'field': key,
+                                'category': 'detailed_content'
+                            })
+                    else:
+                        # Recursively process list items
+                        for i, item in enumerate(value):
+                            if isinstance(item, (dict, list)):
+                                sub_chunks, sub_metadata = self._extract_all_text_content(
+                                    item, source, f"{current_path}[{i}]", 
+                                    f"{parent_context} > {key.replace('_', ' ').title()}" if parent_context else key.replace('_', ' ').title()
+                                )
+                                chunks.extend(sub_chunks)
+                                metadata.extend(sub_metadata)
+                elif isinstance(value, dict):
+                    # Recursively process nested dictionaries
+                    sub_chunks, sub_metadata = self._extract_all_text_content(
+                        value, source, current_path,
+                        f"{parent_context} > {key.replace('_', ' ').title()}" if parent_context else key.replace('_', ' ').title()
+                    )
+                    chunks.extend(sub_chunks)
+                    metadata.extend(sub_metadata)
+        
+        elif isinstance(data, list):
+            for i, item in enumerate(data):
+                if isinstance(item, str) and len(item.strip()) > 30:
+                    chunk_text = f"{parent_context}\n" if parent_context else ""
+                    chunk_text += item
+                    
+                    chunks.append(chunk_text)
+                    metadata.append({
+                        'source': source,
+                        'type': 'list_item',
+                        'path': f"{path}[{i}]",
+                        'category': 'detailed_content'
+                    })
+                elif isinstance(item, (dict, list)):
+                    sub_chunks, sub_metadata = self._extract_all_text_content(
+                        item, source, f"{path}[{i}]", parent_context
+                    )
+                    chunks.extend(sub_chunks)
+                    metadata.extend(sub_metadata)
+        
         return chunks, metadata
     
     def _process_main_knowledge_base(self, data: Dict, source: str) -> Tuple[List[str], List[Dict]]:
@@ -184,48 +291,59 @@ class CharacterologyKnowledgeBase:
         chunks = []
         metadata = []
         
-        # Process framework
+        # Process framework - split into smaller chunks
         if 'framework' in data:
             framework = data['framework']
+            
+            # Framework overview chunk
             chunk = f"Characterology Framework: {framework['description']}\n"
-            chunk += f"Fundamental Principle: {framework['fundamental_principle']}\n"
-            
-            # Add constitutive properties
-            for prop_name, prop_data in framework['constitutive_properties'].items():
-                chunk += f"\n{prop_name.title()} ({prop_data['symbol']}): {prop_data['description']}\n"
-                for subtype_name, subtype_data in prop_data.items():
-                    if isinstance(subtype_data, dict) and 'description' in subtype_data:
-                        chunk += f"- {subtype_name.replace('_', ' ').title()}: {subtype_data['description']}\n"
-            
+            chunk += f"Fundamental Principle: {framework['fundamental_principle']}"
             chunks.append(chunk)
             metadata.append({
                 'source': source,
                 'type': 'framework',
                 'category': 'theory'
             })
+            
+            # Each constitutive property as separate chunk
+            for prop_name, prop_data in framework['constitutive_properties'].items():
+                chunk = f"Constitutive Property: {prop_name.title()} ({prop_data['symbol']})\n"
+                chunk += f"Description: {prop_data['description']}\n"
+                
+                chunks.append(chunk)
+                metadata.append({
+                    'source': source,
+                    'type': 'constitutive_property',
+                    'property': prop_name,
+                    'category': 'theory'
+                })
+                
+                # Each subtype as separate chunk
+                for subtype_name, subtype_data in prop_data.items():
+                    if isinstance(subtype_data, dict) and 'description' in subtype_data:
+                        chunk = f"{prop_name.title()} - {subtype_name.replace('_', ' ').title()} ({subtype_data.get('symbol', '')})\n"
+                        chunk += f"Description: {subtype_data['description']}\n"
+                        
+                        if 'characteristics' in subtype_data:
+                            chunk += "Characteristics:\n"
+                            for char in subtype_data['characteristics']:
+                                chunk += f"- {char}\n"
+                        
+                        chunks.append(chunk)
+                        metadata.append({
+                            'source': source,
+                            'type': 'property_subtype',
+                            'property': prop_name,
+                            'subtype': subtype_name,
+                            'category': 'theory'
+                        })
         
-        # Process character types
+        # Process character types - create granular chunks
         if 'character_types' in data:
             for type_name, type_data in data['character_types'].items():
-                # Main character type description
+                # Basic character type info
                 chunk = f"Character Type: {type_data['name']} ({type_data['formula']})\n"
-                chunk += f"Description: {type_data['description']}\n"
-                chunk += f"Historical Examples: {', '.join(type_data.get('historical_examples', []))}\n"
-                
-                # Core traits
-                traits = type_data['core_traits']
-                chunk += f"Core Traits: Emotionality={traits['emotionality']}, Activity={traits['activity']}, "
-                chunk += f"Primary Resonance={traits['resonance_primary']}, Secondary Resonance={traits['resonance_secondary']}\n"
-                
-                # Key characteristics
-                chunk += "Key Characteristics:\n"
-                for char in type_data['key_characteristics']:
-                    chunk += f"- {char}\n"
-                
-                # Strengths and challenges
-                chunk += "Strengths: " + "; ".join(type_data['strengths']) + "\n"
-                chunk += "Challenges: " + "; ".join(type_data['challenges']) + "\n"
-                
+                chunk += f"Description: {type_data['description']}"
                 chunks.append(chunk)
                 metadata.append({
                     'source': source,
@@ -235,13 +353,84 @@ class CharacterologyKnowledgeBase:
                     'category': 'character_description'
                 })
                 
-                # Process subtypes if present
+                # Historical examples as separate chunk
+                if type_data.get('historical_examples'):
+                    chunk = f"Historical Examples for {type_data['name']} ({type_data['formula']}):\n"
+                    chunk += f"{', '.join(type_data['historical_examples'])}"
+                    chunks.append(chunk)
+                    metadata.append({
+                        'source': source,
+                        'type': 'character_examples',
+                        'character_type': type_name,
+                        'category': 'historical_examples'
+                    })
+                
+                # Core traits as separate chunk
+                if 'core_traits' in type_data:
+                    traits = type_data['core_traits']
+                    chunk = f"Core Traits for {type_data['name']} ({type_data['formula']}):\n"
+                    chunk += f"Emotionality: {traits['emotionality']}\n"
+                    chunk += f"Activity: {traits['activity']}\n"
+                    chunk += f"Primary Resonance: {traits['resonance_primary']}\n"
+                    chunk += f"Secondary Resonance: {traits['resonance_secondary']}"
+                    chunks.append(chunk)
+                    metadata.append({
+                        'source': source,
+                        'type': 'character_traits',
+                        'character_type': type_name,
+                        'category': 'traits'
+                    })
+                
+                # Key characteristics as separate chunk
+                if 'key_characteristics' in type_data:
+                    chunk = f"Key Characteristics of {type_data['name']} ({type_data['formula']}):\n"
+                    for char in type_data['key_characteristics']:
+                        chunk += f"- {char}\n"
+                    chunks.append(chunk)
+                    metadata.append({
+                        'source': source,
+                        'type': 'character_characteristics',
+                        'character_type': type_name,
+                        'category': 'characteristics'
+                    })
+                
+                # Strengths as separate chunk
+                if 'strengths' in type_data:
+                    chunk = f"Strengths of {type_data['name']} ({type_data['formula']}):\n"
+                    for strength in type_data['strengths']:
+                        chunk += f"- {strength}\n"
+                    chunks.append(chunk)
+                    metadata.append({
+                        'source': source,
+                        'type': 'character_strengths',
+                        'character_type': type_name,
+                        'category': 'strengths'
+                    })
+                
+                # Challenges as separate chunk
+                if 'challenges' in type_data:
+                    chunk = f"Challenges for {type_data['name']} ({type_data['formula']}):\n"
+                    for challenge in type_data['challenges']:
+                        chunk += f"- {challenge}\n"
+                    chunks.append(chunk)
+                    metadata.append({
+                        'source': source,
+                        'type': 'character_challenges',
+                        'character_type': type_name,
+                        'category': 'challenges'
+                    })
+                
+                # Process subtypes individually
                 if 'subtypes' in type_data:
                     for subtype_name, subtype_data in type_data['subtypes'].items():
                         if isinstance(subtype_data, dict):
                             subtype_chunk = f"Character Subtype: {type_data['name']} - {subtype_name.replace('_', ' ').title()}\n"
+                            
                             if 'characteristics' in subtype_data:
-                                subtype_chunk += "Characteristics: " + "; ".join(subtype_data['characteristics']) + "\n"
+                                subtype_chunk += "Characteristics:\n"
+                                for char in subtype_data['characteristics']:
+                                    subtype_chunk += f"- {char}\n"
+                            
                             if 'examples' in subtype_data:
                                 subtype_chunk += f"Examples: {', '.join(subtype_data['examples'])}\n"
                             
@@ -268,17 +457,19 @@ class CharacterologyKnowledgeBase:
             # Theoretical extensions
             if 'theoretical_extensions' in berger:
                 for ext_name, ext_data in berger['theoretical_extensions'].items():
-                    chunk = f"Berger Extension - {ext_name.replace('_', ' ').title()}: {ext_data['description']}\n"
-                    
-                    if 'key_concepts' in ext_data:
-                        chunk += "Key Concepts:\n"
-                        for concept in ext_data['key_concepts']:
-                            chunk += f"- {concept}\n"
-                    
-                    if 'principles' in ext_data:
-                        chunk += "Principles:\n"
-                        for principle in ext_data['principles']:
-                            chunk += f"- {principle}\n"
+                    if isinstance(ext_data, dict):
+                        description = ext_data.get('description', f"{ext_name.replace('_', ' ').title()} extension")
+                        chunk = f"Berger Extension - {ext_name.replace('_', ' ').title()}: {description}\n"
+                        
+                        if 'key_concepts' in ext_data:
+                            chunk += "Key Concepts:\n"
+                            for concept in ext_data['key_concepts']:
+                                chunk += f"- {concept}\n"
+                        
+                        if 'principles' in ext_data:
+                            chunk += "Principles:\n"
+                            for principle in ext_data['principles']:
+                                chunk += f"- {principle}\n"
                     
                     chunks.append(chunk)
                     metadata.append({
@@ -295,15 +486,17 @@ class CharacterologyKnowledgeBase:
             # Assessment innovations
             if 'assessment_innovations' in judet:
                 for innov_name, innov_data in judet['assessment_innovations'].items():
-                    chunk = f"Judet Innovation - {innov_name.replace('_', ' ').title()}: {innov_data['description']}\n"
-                    
-                    chunks.append(chunk)
-                    metadata.append({
-                        'source': source,
-                        'type': 'assessment_innovation',
-                        'author': 'judet',
-                        'category': 'methodology'
-                    })
+                    if isinstance(innov_data, dict):
+                        description = innov_data.get('description', f"{innov_name.replace('_', ' ').title()} innovation")
+                        chunk = f"Judet Innovation - {innov_name.replace('_', ' ').title()}: {description}\n"
+                        
+                        chunks.append(chunk)
+                        metadata.append({
+                            'source': source,
+                            'type': 'assessment_innovation',
+                            'author': 'judet',
+                            'category': 'methodology'
+                        })
         
         return chunks, metadata
     
@@ -315,12 +508,17 @@ class CharacterologyKnowledgeBase:
         # Process primary dimensions
         if 'primary_dimensions' in data:
             for dim_name, dim_data in data['primary_dimensions'].items():
-                chunk = f"Psychological Dimension: {dim_name.title()}\n"
-                chunk += f"Definition: {dim_data['definition']}\n"
-                chunk += f"Measurement: {dim_data['measurement_scale']}\n"
-                
-                if 'neurobiological_basis' in dim_data:
-                    chunk += f"Neurobiological Basis: {dim_data['neurobiological_basis']}\n"
+                if isinstance(dim_data, dict):
+                    chunk = f"Psychological Dimension: {dim_name.title()}\n"
+                    
+                    if 'definition' in dim_data:
+                        chunk += f"Definition: {dim_data['definition']}\n"
+                    
+                    if 'measurement_scale' in dim_data:
+                        chunk += f"Measurement: {dim_data['measurement_scale']}\n"
+                    
+                    if 'neurobiological_basis' in dim_data:
+                        chunk += f"Neurobiological Basis: {dim_data['neurobiological_basis']}\n"
                 
                 chunks.append(chunk)
                 metadata.append({
@@ -340,13 +538,16 @@ class CharacterologyKnowledgeBase:
         # Process validation rules
         if 'validation_rules' in data:
             for rule_name, rule_data in data['validation_rules'].items():
-                chunk = f"Schema Validation Rule: {rule_name.replace('_', ' ').title()}\n"
-                chunk += f"Description: {rule_data['description']}\n"
-                
-                if 'rules' in rule_data:
-                    chunk += "Rules:\n"
-                    for rule in rule_data['rules']:
-                        chunk += f"- {rule}\n"
+                if isinstance(rule_data, dict):
+                    chunk = f"Schema Validation Rule: {rule_name.replace('_', ' ').title()}\n"
+                    
+                    if 'description' in rule_data:
+                        chunk += f"Description: {rule_data['description']}\n"
+                    
+                    if 'rules' in rule_data:
+                        chunk += "Rules:\n"
+                        for rule in rule_data['rules']:
+                            chunk += f"- {rule}\n"
                 
                 chunks.append(chunk)
                 metadata.append({
